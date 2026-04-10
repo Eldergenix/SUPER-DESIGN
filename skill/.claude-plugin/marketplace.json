@@ -1,0 +1,30 @@
+{
+  "$schema": "https://code.claude.com/schemas/plugin-marketplace.json",
+  "name": "awesome-design-md",
+  "owner": {
+    "name": "VoltAgent",
+    "url": "https://github.com/VoltAgent/awesome-design-md"
+  },
+  "plugins": [
+    {
+      "name": "awesome-design-md",
+      "description": "Production-grade design system skill with theme adapters, quality gates, and screenshot-to-code workflow",
+      "source": "./",
+      "version": "1.0.0",
+      "category": "design",
+      "tags": [
+        "design-system",
+        "ui",
+        "ux",
+        "tokens",
+        "tailwind",
+        "shadcn",
+        "mui",
+        "radix",
+        "geist",
+        "screenshot-to-code",
+        "quality-gates"
+      ]
+    }
+  ]
+}

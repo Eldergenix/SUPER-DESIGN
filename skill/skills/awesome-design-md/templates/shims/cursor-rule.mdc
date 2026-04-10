@@ -1,0 +1,36 @@
+---
+description: Awesome DESIGN.md skill — enforces design tokens, state matrix, responsive patterns, and quality gates on all UI edits.
+globs:
+  - "**/*.{tsx,jsx,ts,js,vue,svelte,css,scss,astro}"
+alwaysApply: true
+---
+
+# Design System Rules
+
+Read `DESIGN.md` at the project root before any UI work. It is the closed token layer — every color, spacing, typography, radius, shadow, and animation value in component code MUST reference a token defined there.
+
+## Hard rules
+
+- **No hardcoded values** in component code — no `#hex`, no `rgb()`, no `hsl()`, no unscaled `px`. Reference a token.
+- **Every interactive element** defines `hover`, `focus-visible`, `active`, `disabled`. Buttons add `loading`. Inputs add `error`, `readonly`.
+- **Use `:focus-visible`** for keyboard focus rings. 3px outline, 2px offset, 3:1 contrast.
+- **Animate only `transform` and `opacity`.** Never `width`/`height`/`top`/`left`/`margin`/`padding`.
+- **Respect `prefers-reduced-motion`.** Replace movement with opacity changes.
+- **Max 300 LOC per component file.** Extract when JSX nests > 4 levels deep.
+- **Min 44×44 touch targets.** 8px minimum gap.
+- **Responsive at 320/375/768/1024/1440/1920.** Container queries for reusable components, media queries for page shells.
+
+## Reference
+
+Full skill and framework adapters live at `.claude/skills/awesome-design-md/`. Load on demand:
+- `references/tokens-schema.md` — DTCG token format
+- `references/state-matrix.md` — required states per component + ARIA
+- `references/animation-tokens.md` — durations / easings / recipes
+- `references/responsive-patterns.md` — breakpoints / clamp / container queries
+- `references/component-quality-gates.md` — LOC / complexity / scoring
+- `references/screenshot-to-code-workflow.md` — 7-pass extraction loop
+- `references/framework-adapters/{tailwind-v4,tailwind-v3,shadcn,mui,radix,geist}.md`
+
+## Self-check before declaring done
+
+Run `bash .claude/skills/awesome-design-md/scripts/quality-score.sh <file>`. Target ≥ 90 (grade A).

@@ -1,0 +1,62 @@
+{
+  "name": "awesome-design-md",
+  "version": "1.0.0",
+  "description": "Production-grade design system skill for Claude Code, Cursor, Codex, Gemini, Copilot, and more. Reads DESIGN.md, sets up theme tokens, and enforces UI/UX quality gates via hooks.",
+  "bin": {
+    "awesome-design-md": "./bin/install.js"
+  },
+  "scripts": {
+    "install-skill": "node ./bin/install.js",
+    "test": "bash ./skills/awesome-design-md/scripts/quality-score.sh README.md || true"
+  },
+  "files": [
+    "skills/",
+    "hooks/",
+    "bin/",
+    ".claude-plugin/",
+    "install.sh",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "claude-code",
+    "claude-skill",
+    "design-system",
+    "design-tokens",
+    "design-md",
+    "ui",
+    "ux",
+    "tailwind",
+    "shadcn",
+    "mui",
+    "radix",
+    "geist",
+    "cursor",
+    "copilot",
+    "codex",
+    "gemini",
+    "antigravity",
+    "screenshot-to-code",
+    "pixel-perfect",
+    "accessibility",
+    "wcag",
+    "responsive",
+    "hooks",
+    "quality-gates",
+    "visual-regression"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VoltAgent/awesome-design-md"
+  },
+  "homepage": "https://github.com/VoltAgent/awesome-design-md",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "odiff-bin": "^3.0.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

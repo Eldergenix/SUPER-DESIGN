@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "pattern": "**/*.{tsx,jsx,ts,js,vue,svelte,css,scss,astro}",
+        "command": "bash .claude/skills/awesome-design-md/scripts/validate-tokens.sh \"${file}\""
+      },
+      {
+        "pattern": "**/*.{tsx,jsx,vue,svelte}",
+        "command": "bash .claude/skills/awesome-design-md/scripts/validate-component.sh \"${file}\""
+      }
+    ]
+  }
+}

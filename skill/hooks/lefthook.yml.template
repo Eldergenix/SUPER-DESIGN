@@ -1,0 +1,36 @@
+# lefthook.yml — fallback for agents that don't support post-edit hooks
+# (Copilot, Codex, Gemini CLI, Continue.dev, Aider, Cline, Zed).
+#
+# Install: npm i -D lefthook && npx lefthook install
+# Or:      brew install lefthook && lefthook install
+#
+# This ensures quality gates run at commit time even when the agent
+# didn't run them per-edit.
+
+pre-commit:
+  parallel: true
+  commands:
+    validate-tokens:
+      glob: "**/*.{tsx,jsx,ts,js,vue,svelte,css,scss,astro}"
+      run: |
+        for f in {staged_files}; do
+          bash .claude/skills/awesome-design-md/scripts/validate-tokens.sh "$f" || exit 1
+        done
+
+    validate-components:
+      glob: "**/*.{tsx,jsx,vue,svelte}"
+      run: |
+        for f in {staged_files}; do
+          bash .claude/skills/awesome-design-md/scripts/validate-component.sh "$f" || exit 1
+        done
+
+    quality-score:
+      glob: "**/*.{tsx,jsx,vue,svelte}"
+      run: |
+        for f in {staged_files}; do
+          score=$(bash .claude/skills/awesome-design-md/scripts/quality-score.sh "$f" | python3 -c 'import sys,json; print(json.load(sys.stdin)["totalScore"])')
+          if [ "$score" -lt 60 ]; then
+            echo "✗ $f scored $score/100 (minimum 60) — grade F, please refine"
+            exit 1
+          fi
+        done

@@ -219,8 +219,19 @@ export function Diamond({ size = 16, ...rest }: IconProps) {
   // Filled diamond — used for the yellow milestone/issue indicator on the
   // Nexis Homebase row. Unlike the other outlined icons, this one is a
   // solid fill since it acts as a status marker, not a UI control.
+  // `...rest` is spread onto the <svg> so callers can pass style/className
+  // (ProjectRow passes `style={{ color: 'var(--color-warning)' }}` to tint
+  // it yellow — without the spread, that prop would be dropped and the
+  // diamond would inherit the row's text color instead).
   return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      focusable="false"
+      {...rest}
+    >
       <path d="M8 2l6 6-6 6-6-6 6-6z" fill="currentColor" />
     </svg>
   );

@@ -101,17 +101,17 @@ SUPER-DESIGN/
 │       │   └── screenshot-to-code-workflow.md
 │       ├── scripts/                 #     All 14 automation scripts
 │       └── templates/               #     AGENTS.md, CLAUDE.md, shims, ESLint/Stylelint/Prettier configs
-└── super-design-md/                 # ← Curated DESIGN.md collection (55 real brands)
+└── super-design-md/                 # ← Curated DESIGN.md collection (54 real brands)
     ├── linear.app/                  #   Each folder: DESIGN.md + README + preview.html + preview-dark.html
     ├── stripe/
     ├── vercel/
     ├── apple/
-    └── ... (55 total)
+    └── ... (54 total)
 ```
 
 ## The DESIGN.md collection
 
-Alongside the skill, this repo ships **55 production-extracted `DESIGN.md` files** from real developer-facing websites. Use any of them as a reference implementation of the format, or copy one directly into your project as a starting point:
+Alongside the skill, this repo ships **54 production-extracted `DESIGN.md` files** from real developer-facing websites. Use any of them as a reference implementation of the format, or copy one directly into your project as a starting point:
 
 ### AI & Machine Learning
 [Claude](./super-design-md/claude/) · [Cohere](./super-design-md/cohere/) · [ElevenLabs](./super-design-md/elevenlabs/) · [Minimax](./super-design-md/minimax/) · [Mistral AI](./super-design-md/mistral.ai/) · [Ollama](./super-design-md/ollama/) · [OpenCode AI](./super-design-md/opencode.ai/) · [Replicate](./super-design-md/replicate/) · [RunwayML](./super-design-md/runwayml/) · [Together AI](./super-design-md/together.ai/) · [VoltAgent](./super-design-md/voltagent/) · [xAI](./super-design-md/x.ai/)

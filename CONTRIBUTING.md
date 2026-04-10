@@ -5,7 +5,7 @@ Thanks for contributing.
 This repository ships two things:
 
 1. **Super Design** — the installable AI skill under [`skill/`](./skill/) that enforces production-grade UI/UX on AI-generated code.
-2. **The DESIGN.md collection** — 55 reference `DESIGN.md` files under [`super-design-md/`](./super-design-md/) extracted from real developer-focused websites.
+2. **The DESIGN.md collection** — 54 reference `DESIGN.md` files under [`super-design-md/`](./super-design-md/) extracted from real developer-focused websites.
 
 Different contributions go to different paths.
 

@@ -5,4 +5,4 @@
 set -eo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-exec bash "$SCRIPT_DIR/skills/awesome-design-md/scripts/install.sh" "$@"
+exec bash "$SCRIPT_DIR/skills/super-design/scripts/install.sh" "$@"

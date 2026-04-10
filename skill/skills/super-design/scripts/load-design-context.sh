@@ -28,7 +28,7 @@ CTX_FILE=$(mktemp)
 trap 'rm -f "$CTX_FILE"' EXIT
 
 {
-  printf '📐 awesome-design-md loaded DESIGN.md from %s\n\n' "$DESIGN_MD"
+  printf '📐 super-design loaded DESIGN.md from %s\n\n' "$DESIGN_MD"
   awk '/^## /{n++} n>3{exit} {print}' "$DESIGN_MD" | awk '
     BEGIN {len=0; max=1800}
     {

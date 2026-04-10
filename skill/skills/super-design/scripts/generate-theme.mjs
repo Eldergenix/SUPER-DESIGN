@@ -190,7 +190,7 @@ function emitTailwindV4(blocks, semantic, { mode }) {
     dark.push(`  ${name}: ${resolve(val, blocks)};`);
   }
 
-  return `/* Generated from DESIGN.md by awesome-design-md generate-theme.mjs */
+  return `/* Generated from DESIGN.md by super-design generate-theme.mjs */
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));

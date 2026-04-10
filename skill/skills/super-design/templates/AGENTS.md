@@ -3,7 +3,7 @@
 > Universal agent instructions. Read by Claude Code, Cursor, OpenAI Codex,
 > GitHub Copilot, Gemini CLI, Google Antigravity, Windsurf, Zed, Cline,
 > Continue.dev, Aider. The design-system subset of these instructions is
-> enforced by the **awesome-design-md** skill.
+> enforced by the **super-design** skill.
 
 ## Design System
 
@@ -39,19 +39,19 @@ it to `DESIGN.md` first and get approval before using it.
 1. Read `DESIGN.md` first
 2. Detect the framework (Tailwind v4 / v3, ShadCN, MUI, Radix, Geist) and use
    the matching adapter in
-   `.claude/skills/awesome-design-md/references/framework-adapters/`
+   `.claude/skills/super-design/references/framework-adapters/`
 3. Build the component using tokens only
 4. Self-check against `references/component-quality-gates.md`
-5. Run `bash .claude/skills/awesome-design-md/scripts/quality-score.sh <file>`
+5. Run `bash .claude/skills/super-design/scripts/quality-score.sh <file>`
    — target score ≥ 90 (grade A)
 
 ## Screenshot → Code
 
 If the user provides a screenshot to recreate, follow the 7-pass extraction
-loop in `.claude/skills/awesome-design-md/references/screenshot-to-code-workflow.md`.
+loop in `.claude/skills/super-design/references/screenshot-to-code-workflow.md`.
 Never silently invent tokens — reconcile against DESIGN.md first.
 
 ## Full Skill
 
-Bundled at `.claude/skills/awesome-design-md/SKILL.md`. Load the skill's
+Bundled at `.claude/skills/super-design/SKILL.md`. Load the skill's
 reference files on demand; they are large.

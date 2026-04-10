@@ -1,6 +1,6 @@
-# awesome-design-md
+# Super Design
 
-> A production-grade design-system skill for AI coding agents.
+> **A production-grade design-system skill for AI coding agents.**
 > Reads `DESIGN.md` as a closed token layer, generates framework-native
 > theme code, and enforces UI/UX quality gates on every edit via hooks.
 > Ships with real automation — not just documentation.
@@ -32,28 +32,28 @@
 ### Claude Code — plugin marketplace
 
 ```
-/plugin marketplace add VoltAgent/awesome-design-md
-/plugin install awesome-design-md@awesome-design-md
+/plugin marketplace add Eldergenix/SUPER-DESIGN
+/plugin install super-design@super-design
 ```
 
 ### Claude Code / any agent — git clone + bash
 
 ```bash
-git clone https://github.com/VoltAgent/awesome-design-md.git /tmp/awesome-design-md
+git clone https://github.com/Eldergenix/SUPER-DESIGN.git /tmp/super-design
 cd /path/to/your/project
 
 # Preview what will change
-bash /tmp/awesome-design-md/skill/install.sh --project --dry-run
+bash /tmp/super-design/skill/install.sh --project --dry-run
 
 # Actually install
-bash /tmp/awesome-design-md/skill/install.sh --project
+bash /tmp/super-design/skill/install.sh --project
 ```
 
 ### npm / npx
 
 ```bash
 cd /path/to/your/project
-npx awesome-design-md --project
+npx super-design --project
 ```
 
 Works without bash on Windows — `bin/install.js` has a pure-Node fallback.
@@ -61,10 +61,10 @@ Works without bash on Windows — `bin/install.js` has a pure-Node fallback.
 ### Uninstall
 
 ```bash
-bash .claude/skills/awesome-design-md/scripts/install.sh --uninstall
+bash .claude/skills/super-design/scripts/install.sh --uninstall
 ```
 
-Removes the skill directory, strips `awesome-design-md` hooks from `settings.json`, removes shim files. Does NOT remove your `DESIGN.md` (it's your design system).
+Removes the skill directory, strips `super-design` hooks from `settings.json`, removes shim files. Does NOT remove your `DESIGN.md` (it's your design system).
 
 ## What gets installed (project mode)
 
@@ -79,9 +79,9 @@ your-project/
 ├── playwright.design-md.config.ts                # Visual-regression config (320/375/768/1024/1440/1920 + dark + forced-colors)
 ├── .claude/
 │   ├── settings.json                             # Hooks merged into existing config
-│   ├── awesome-design-md.install.json            # Version manifest
-│   └── skills/awesome-design-md/                 # Full skill with SKILL.md + references + scripts
-├── .cursor/rules/awesome-design-md.mdc           # Cursor rule (alwaysApply)
+│   ├── super-design.install.json            # Version manifest
+│   └── skills/super-design/                 # Full skill with SKILL.md + references + scripts
+├── .cursor/rules/super-design.mdc           # Cursor rule (alwaysApply)
 ├── .github/copilot-instructions.md               # Copilot instructions
 ├── .windsurf/rules/design-system.md              # Windsurf rule
 ├── .continue/rules/design-system.md              # Continue.dev rule
@@ -122,20 +122,20 @@ The skill runs the 7-pass extraction loop from `references/screenshot-to-code-wo
 
 ```bash
 # Score a single component
-bash .claude/skills/awesome-design-md/scripts/quality-score.sh src/components/Button.tsx
+bash .claude/skills/super-design/scripts/quality-score.sh src/components/Button.tsx
 # { "totalScore": 92, "grade": "A", "breakdown": { ... } }
 
 # Batch audit — sorted worst-first on stderr
-bash .claude/skills/awesome-design-md/scripts/audit.sh src/
+bash .claude/skills/super-design/scripts/audit.sh src/
 
 # Visual diff
-node .claude/skills/awesome-design-md/scripts/visual-diff.mjs reference.png actual.png diff.png 0.1
+node .claude/skills/super-design/scripts/visual-diff.mjs reference.png actual.png diff.png 0.1
 
 # WCAG contrast check on your DESIGN.md
-node .claude/skills/awesome-design-md/scripts/contrast-check.mjs DESIGN.md
+node .claude/skills/super-design/scripts/contrast-check.mjs DESIGN.md
 
 # Generate theme file from DESIGN.md
-node .claude/skills/awesome-design-md/scripts/generate-theme.mjs DESIGN.md --target=tailwind-v4 --out=app/globals.css
+node .claude/skills/super-design/scripts/generate-theme.mjs DESIGN.md --target=tailwind-v4 --out=app/globals.css
 ```
 
 ## Hard rules enforced on every edit
@@ -201,7 +201,7 @@ The enhanced `DESIGN.md` template (shipped to your project on install) includes:
 ## Tests
 
 ```bash
-bash .claude/skills/awesome-design-md/scripts/test.sh
+bash .claude/skills/super-design/scripts/test.sh
 ```
 
 Runs 13 self-tests against good/bad component fixtures:
@@ -217,11 +217,11 @@ Runs 13 self-tests against good/bad component fixtures:
 
 ## License
 
-MIT © VoltAgent
+MIT © Eldergenix
 
 ## Links
 
-- [awesome-design-md repo](https://github.com/VoltAgent/awesome-design-md)
+- [Super Design repo](https://github.com/Eldergenix/SUPER-DESIGN)
 - [Google Stitch DESIGN.md format](https://stitch.withgoogle.com/docs/design-md/overview/)
 - [AGENTS.md open standard](https://agents.md/)
 - [Claude Code Skills](https://code.claude.com/docs/en/skills)

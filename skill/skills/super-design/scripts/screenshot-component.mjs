@@ -5,7 +5,7 @@
  * Usage:
  *   node screenshot-component.mjs <url-or-file> <out.png> [--viewport=1280x800] [--selector=.my-component] [--dark]
  *
- * Dependencies: playwright (as optional dep of awesome-design-md)
+ * Dependencies: playwright (as optional dep of super-design)
  * Install on demand: npm i -D @playwright/test && npx playwright install chromium
  */
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/VoltAgent/awesome-design-md/schema/tokens/v1",
-  "title": "awesome-design-md Token Schema",
+  "$id": "https://github.com/Eldergenix/SUPER-DESIGN/schema/tokens/v1",
+  "title": "super-design Token Schema",
   "description": "DTCG-compatible token schema for DESIGN.md files. Every DESIGN.md must produce tokens that validate against this schema.",
   "type": "object",
   "required": ["$schema", "color", "space", "font", "duration", "ease", "radius", "shadow"],

@@ -1,15 +1,17 @@
-# Design System
+# Design System (Windsurf Rule)
 
-See `AGENTS.md` and `DESIGN.md` at project root.
+This project uses the `super-design` design system.
+
+**Before any UI work, read `DESIGN.md` at the project root.**
 
 ## Hard rules
 
 - Reference tokens from `DESIGN.md`; never emit literal `#hex`, `rgb()`, `hsl()`, or unscaled `px`
 - Every interactive element: `hover`, `focus-visible`, `active`, `disabled`
-- `:focus-visible` only; 3px outline, 2px offset, 3:1 contrast
+- Use `:focus-visible` only. 3px outline, 2px offset, 3:1 contrast
 - Animate only `transform` and `opacity`; respect `prefers-reduced-motion`
 - Max 300 LOC per component file
 - Min 44×44 touch targets
 - Responsive at 320/375/768/1024/1440/1920
 
-Full skill: `.claude/skills/awesome-design-md/SKILL.md`.
+Full skill: `.claude/skills/super-design/SKILL.md`.

@@ -1,10 +1,10 @@
-# Contributing to awesome-design-md (skill)
+# Contributing to Super Design
 
 Thanks for your interest in improving this skill. A few ground rules.
 
 ## Ground rules
 
-1. **All PRs must pass `bash skills/awesome-design-md/scripts/test.sh`.** The self-test suite asserts every script against good/bad fixtures. Zero failures.
+1. **All PRs must pass `bash skills/super-design/scripts/test.sh`.** The self-test suite asserts every script against good/bad fixtures. Zero failures.
 2. **All new validator logic must have a fixture test.** If you add a new rule to `validate-tokens.sh`, add a component fixture in `test.sh` that exercises it.
 3. **Never introduce the `|| echo 0` anti-pattern.** Use `grep -oE ... | wc -l` for counts (see `_lib.sh` `count_matches`).
 4. **Never interpolate shell variables into Python/JS strings** in hook scripts — use `jq` with stdin or `python3 -c` reading from stdin. See `inject-design-context.sh` as the reference.
@@ -17,15 +17,15 @@ Thanks for your interest in improving this skill. A few ground rules.
 # Clone & test
 git clone <repo>
 cd skill
-bash skills/awesome-design-md/scripts/test.sh     # must pass
+bash skills/super-design/scripts/test.sh     # must pass
 
 # Install into a sample project for manual validation
 mkdir /tmp/sample && cd /tmp/sample
 PROJECT_ROOT=$PWD bash /path/to/skill/install.sh --project --dry-run   # preview
 PROJECT_ROOT=$PWD bash /path/to/skill/install.sh --project             # actual
-bash .claude/skills/awesome-design-md/scripts/lint-design-md.sh DESIGN.md
-node .claude/skills/awesome-design-md/scripts/contrast-check.mjs DESIGN.md
-node .claude/skills/awesome-design-md/scripts/generate-theme.mjs DESIGN.md --target=tailwind-v4
+bash .claude/skills/super-design/scripts/lint-design-md.sh DESIGN.md
+node .claude/skills/super-design/scripts/contrast-check.mjs DESIGN.md
+node .claude/skills/super-design/scripts/generate-theme.mjs DESIGN.md --target=tailwind-v4
 ```
 
 ## Code style
@@ -88,10 +88,10 @@ node .claude/skills/awesome-design-md/scripts/generate-theme.mjs DESIGN.md --tar
 
 1. Update `CHANGELOG.md` with new version.
 2. Bump version in `package.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and the `INSTALLER_VERSION` constant in `scripts/install.sh`.
-3. Run `bash skills/awesome-design-md/scripts/test.sh` — must be green.
+3. Run `bash skills/super-design/scripts/test.sh` — must be green.
 4. Tag the release: `git tag v1.x.y && git push --tags`.
 5. Publish to npm: `npm publish` (from the `skill/` directory).
 
 ## Questions
 
-Open an issue at https://github.com/VoltAgent/awesome-design-md/issues.
+Open an issue at https://github.com/Eldergenix/SUPER-DESIGN/issues.

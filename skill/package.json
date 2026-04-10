@@ -1,13 +1,13 @@
 {
-  "name": "awesome-design-md",
+  "name": "super-design",
   "version": "1.1.0",
   "description": "Production-grade design system skill for Claude Code, Cursor, Codex, Gemini, Copilot, and more. Reads DESIGN.md, sets up theme tokens, and enforces UI/UX quality gates via hooks.",
   "bin": {
-    "awesome-design-md": "./bin/install.js"
+    "super-design": "./bin/install.js"
   },
   "scripts": {
     "install-skill": "node ./bin/install.js",
-    "test": "bash ./skills/awesome-design-md/scripts/quality-score.sh README.md || true"
+    "test": "bash ./skills/super-design/scripts/quality-score.sh README.md || true"
   },
   "files": [
     "skills/",
@@ -47,9 +47,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/VoltAgent/awesome-design-md"
+    "url": "https://github.com/Eldergenix/SUPER-DESIGN"
   },
-  "homepage": "https://github.com/VoltAgent/awesome-design-md",
+  "homepage": "https://github.com/Eldergenix/SUPER-DESIGN",
   "license": "MIT",
   "engines": {
     "node": ">=18"

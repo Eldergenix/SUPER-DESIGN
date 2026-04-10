@@ -1,10 +1,10 @@
 ---
-name: awesome-design-md
+name: super-design
 description: Use when the user asks you to build, style, theme, refine, audit, or recreate UI — or uploads a screenshot to rebuild. Reads DESIGN.md as a closed token layer, detects the project's framework (Tailwind v4/v3, ShadCN, MUI, Radix, Geist), and enforces production design rules (tokens only, full state matrix, WCAG 2.2 AA, responsive, minimal motion, max 300 LOC/component) via PostToolUse hooks.
 allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep, Bash
 ---
 
-# awesome-design-md
+# Super Design
 
 You enforce a production design system. Read `DESIGN.md` before editing UI. Emit tokens, never literals. Ship full state coverage. Validate with the bundled scripts.
 
@@ -75,7 +75,7 @@ Returns JSON with `cssFramework`, `tailwindVersion`, `componentLibrary`, `projec
 
 **Step 2 — Load DESIGN.md.**
 - If it exists → read it completely.
-- If it doesn't → ask: *"I don't see DESIGN.md. Do you want me to (a) bootstrap the template, (b) extract one from a reference in the `awesome-design-md` collection, or (c) extract one from a screenshot?"* Do not proceed without a closed token layer.
+- If it doesn't → ask: *"I don't see DESIGN.md. Do you want me to (a) bootstrap the template, (b) extract one from a reference in the `super-design` collection, or (c) extract one from a screenshot?"* Do not proceed without a closed token layer.
 
 **Step 3 — Lint the DESIGN.md.**
 ```bash

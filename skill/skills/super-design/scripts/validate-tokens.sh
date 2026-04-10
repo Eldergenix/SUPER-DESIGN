@@ -163,7 +163,7 @@ if [ "$V" -eq 0 ] && [ "$W" -eq 0 ]; then
   exit 0
 fi
 
-MSG="awesome-design-md: token audit for ${FILE_PATH}"$'\n'
+MSG="super-design: token audit for ${FILE_PATH}"$'\n'
 if [ "$V" -gt 0 ]; then
   MSG+=$'\n'"❌ $V violation(s) — these block the edit:"$'\n'
   for v in "${VIOLATIONS[@]}"; do

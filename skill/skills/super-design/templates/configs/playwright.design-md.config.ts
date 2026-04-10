@@ -1,5 +1,5 @@
 // playwright.design-md.config.ts — ship-ready Playwright config for
-// visual-regression testing wired to the awesome-design-md skill.
+// visual-regression testing wired to the super-design skill.
 //
 // Import this from your main playwright.config.ts or use as a standalone
 // config: `npx playwright test -c playwright.design-md.config.ts`.

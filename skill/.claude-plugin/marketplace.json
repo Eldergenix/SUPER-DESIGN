@@ -1,13 +1,13 @@
 {
   "$schema": "https://code.claude.com/schemas/plugin-marketplace.json",
-  "name": "awesome-design-md",
+  "name": "super-design",
   "owner": {
-    "name": "VoltAgent",
-    "url": "https://github.com/VoltAgent/awesome-design-md"
+    "name": "Eldergenix",
+    "url": "https://github.com/Eldergenix/SUPER-DESIGN"
   },
   "plugins": [
     {
-      "name": "awesome-design-md",
+      "name": "super-design",
       "description": "Production-grade design system skill with theme adapters, quality gates, and screenshot-to-code workflow",
       "source": "./",
       "version": "1.1.0",

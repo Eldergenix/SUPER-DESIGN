@@ -144,7 +144,7 @@ should_skip_file() {
       return 0 ;;
     *DESIGN.md|*STATE_MATRIX.yaml|*tokens.schema.json)
       return 0 ;;
-    */.claude-plugin/*|*/.claude/skills/awesome-design-md/*)
+    */.claude-plugin/*|*/.claude/skills/super-design/*)
       return 0 ;;
   esac
   return 1

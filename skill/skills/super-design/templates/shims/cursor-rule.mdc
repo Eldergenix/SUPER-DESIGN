@@ -22,7 +22,7 @@ Read `DESIGN.md` at the project root before any UI work. It is the closed token 
 
 ## Reference
 
-Full skill and framework adapters live at `.claude/skills/awesome-design-md/`. Load on demand:
+Full skill and framework adapters live at `.claude/skills/super-design/`. Load on demand:
 - `references/tokens-schema.md` — DTCG token format
 - `references/state-matrix.md` — required states per component + ARIA
 - `references/animation-tokens.md` — durations / easings / recipes
@@ -33,4 +33,4 @@ Full skill and framework adapters live at `.claude/skills/awesome-design-md/`. L
 
 ## Self-check before declaring done
 
-Run `bash .claude/skills/awesome-design-md/scripts/quality-score.sh <file>`. Target ≥ 90 (grade A).
+Run `bash .claude/skills/super-design/scripts/quality-score.sh <file>`. Target ≥ 90 (grade A).

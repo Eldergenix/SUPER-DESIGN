@@ -1,7 +1,7 @@
 # Design System: [PROJECT NAME]
 
 > **This file is the closed token layer.** Every value in component code
-> MUST reference a token defined here. The awesome-design-md skill's
+> MUST reference a token defined here. The super-design skill's
 > PostToolUse hooks will reject literals (`#hex`, `rgb()`, `hsl()`,
 > unscaled `px`, inline color styles) in component files.
 >
@@ -15,7 +15,7 @@
 version: 1.0.0
 last_updated: YYYY-MM-DD
 upstream_source: <url>
-schema: https://github.com/VoltAgent/awesome-design-md/schema/v1
+schema: https://github.com/Eldergenix/SUPER-DESIGN/schema/v1
 framework:
   css: tailwind-v4        # tailwind-v4 | tailwind-v3 | vanilla | css-modules
   component_library: none # shadcn | mui | radix-themes | radix-primitives | geist-ui | geist-font | none

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# test.sh — smoke tests for the awesome-design-md skill.
+# test.sh — smoke tests for the super-design skill.
 #
 # Usage:
 #   bash test.sh                # run the full self-test suite

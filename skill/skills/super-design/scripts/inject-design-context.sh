@@ -27,7 +27,7 @@ CTX_FILE=$(mktemp)
 trap 'rm -f "$CTX_FILE"' EXIT
 
 {
-  echo "📐 awesome-design-md skill is active. Follow the production design rules:"
+  echo "📐 super-design skill is active. Follow the production design rules:"
   echo "  • Read DESIGN.md BEFORE editing UI. Use semantic tokens, never literal colors/unscaled px."
   echo "  • Every interactive element needs hover, focus-visible, active, disabled states."
   echo "  • :focus-visible only. Double-ring box-shadow for 3:1 contrast on any background."

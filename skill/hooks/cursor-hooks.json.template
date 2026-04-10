@@ -4,11 +4,11 @@
     "afterFileEdit": [
       {
         "pattern": "**/*.{tsx,jsx,ts,js,vue,svelte,css,scss,astro}",
-        "command": "bash .claude/skills/awesome-design-md/scripts/validate-tokens.sh \"${file}\""
+        "command": "bash .claude/skills/super-design/scripts/validate-tokens.sh \"${file}\""
       },
       {
         "pattern": "**/*.{tsx,jsx,vue,svelte}",
-        "command": "bash .claude/skills/awesome-design-md/scripts/validate-component.sh \"${file}\""
+        "command": "bash .claude/skills/super-design/scripts/validate-component.sh \"${file}\""
       }
     ]
   }

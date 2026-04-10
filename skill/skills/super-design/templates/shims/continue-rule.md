@@ -17,4 +17,4 @@ Read `DESIGN.md` at the project root before any UI work.
 - Min 44×44 touch targets
 - Responsive at 320/375/768/1024/1440/1920
 
-Full skill: `.claude/skills/awesome-design-md/SKILL.md`.
+Full skill: `.claude/skills/super-design/SKILL.md`.

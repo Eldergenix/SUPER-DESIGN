@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install.sh — installs the awesome-design-md skill + hooks + agent shims.
+# install.sh — installs the super-design skill + hooks + agent shims.
 #
 # Modes:
 #   bash install.sh                → ~/.claude/skills (global)
@@ -17,7 +17,7 @@
 #   --project-root P  explicit project root (default: $PWD)
 #   --version         print installer version
 #
-# Idempotent. Records installed version in ./.claude/awesome-design-md.install.json
+# Idempotent. Records installed version in ./.claude/super-design.install.json
 # for migration detection. Rollback on failure via snapshot restore.
 
 set -eo pipefail
@@ -26,8 +26,8 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # shellcheck source=_lib.sh
 . "${SCRIPT_DIR}/_lib.sh"
 
-SKILL_SRC="$( cd "${SCRIPT_DIR}/.." && pwd )"  # skills/awesome-design-md/
-SKILL_NAME="awesome-design-md"
+SKILL_SRC="$( cd "${SCRIPT_DIR}/.." && pwd )"  # skills/super-design/
+SKILL_NAME="super-design"
 INSTALLER_VERSION="1.1.0"
 
 MODE="global"
@@ -54,7 +54,7 @@ while [ $# -gt 0 ]; do
     --force)           FORCE=1 ;;
     --project-root)    shift; PROJECT_ROOT="$1" ;;
     --project-root=*)  PROJECT_ROOT="${1#*=}" ;;
-    --version)         echo "awesome-design-md installer $INSTALLER_VERSION"; exit 0 ;;
+    --version)         echo "super-design installer $INSTALLER_VERSION"; exit 0 ;;
     --help|-h)
       grep -E '^# ' "$0" | sed 's/^# //'
       exit 0 ;;
@@ -68,7 +68,7 @@ HOME_SKILLS="$HOME/.claude/skills/$SKILL_NAME"
 PROJECT_SKILLS="$PROJECT_ROOT/.claude/skills/$SKILL_NAME"
 PROJECT_SETTINGS="$PROJECT_ROOT/.claude/settings.json"
 HOME_SETTINGS="$HOME/.claude/settings.json"
-PROJECT_MANIFEST="$PROJECT_ROOT/.claude/awesome-design-md.install.json"
+PROJECT_MANIFEST="$PROJECT_ROOT/.claude/super-design.install.json"
 SNAPSHOT_DIR=""
 
 # -------- Dry-run / real copy wrapper --------
@@ -113,7 +113,7 @@ trap 'rc=$?; [ $rc -ne 0 ] && rollback; cleanup_snapshot' EXIT
 
 # -------- Uninstall --------
 if [ "$UNINSTALL" -eq 1 ]; then
-  info "Uninstalling awesome-design-md..."
+  info "Uninstalling super-design..."
 
   # Remove skill directories
   [ -d "$HOME_SKILLS" ]    && action rm -rf "$HOME_SKILLS"    && info "Removed $HOME_SKILLS"
@@ -123,7 +123,7 @@ if [ "$UNINSTALL" -eq 1 ]; then
   for settings in "$HOME_SETTINGS" "$PROJECT_SETTINGS"; do
     [ -f "$settings" ] || continue
     if [ "$DRY_RUN" -eq 1 ]; then
-      info "[dry-run] would strip awesome-design-md hooks from $settings"
+      info "[dry-run] would strip super-design hooks from $settings"
       continue
     fi
 
@@ -133,7 +133,7 @@ if [ "$UNINSTALL" -eq 1 ]; then
       jq 'if .hooks then
         .hooks |= with_entries(
           .value |= map(
-            .hooks |= map(select(.command | test("awesome-design-md") | not))
+            .hooks |= map(select(.command | test("super-design") | not))
           )
           | .value |= map(select(.hooks | length > 0))
         )
@@ -152,7 +152,7 @@ if "hooks" in d:
   for event, matchers in list(d["hooks"].items()):
     new = []
     for m in matchers:
-      m["hooks"] = [h for h in m.get("hooks", []) if "awesome-design-md" not in (h.get("command") or "")]
+      m["hooks"] = [h for h in m.get("hooks", []) if "super-design" not in (h.get("command") or "")]
       if m["hooks"]: new.append(m)
     if new: d["hooks"][event] = new
     else: del d["hooks"][event]
@@ -170,12 +170,12 @@ PYEOF
 
   # Remove shim files (only if they still point to our skill)
   for shim in "$PROJECT_ROOT/AGENTS.md" "$PROJECT_ROOT/CLAUDE.md" "$PROJECT_ROOT/GEMINI.md" \
-              "$PROJECT_ROOT/.cursor/rules/awesome-design-md.mdc" \
+              "$PROJECT_ROOT/.cursor/rules/super-design.mdc" \
               "$PROJECT_ROOT/.github/copilot-instructions.md" \
               "$PROJECT_ROOT/.windsurf/rules/design-system.md" \
               "$PROJECT_ROOT/.continue/rules/design-system.md" \
               "$PROJECT_ROOT/.clinerules/design-system.md"; do
-    if [ -f "$shim" ] && grep -q 'awesome-design-md' "$shim" 2>/dev/null; then
+    if [ -f "$shim" ] && grep -q 'super-design' "$shim" 2>/dev/null; then
       action rm -f "$shim"
       info "Removed $shim"
     fi
@@ -238,7 +238,7 @@ merge_hooks() {
 
   info "Merging hooks into $settings_path"
   if [ "$DRY_RUN" -eq 1 ]; then
-    info "[dry-run] would merge awesome-design-md hooks"
+    info "[dry-run] would merge super-design hooks"
     return 0
   fi
 
@@ -345,7 +345,7 @@ if [ "$MODE" != "global" ]; then
     SHIMS_DIR="$SKILL_SRC/templates/shims"
     write_if_absent "$SHIMS_DIR/CLAUDE.md"                "$PROJECT_ROOT/CLAUDE.md"
     write_if_absent "$SHIMS_DIR/GEMINI.md"                "$PROJECT_ROOT/GEMINI.md"
-    write_if_absent "$SHIMS_DIR/cursor-rule.mdc"          "$PROJECT_ROOT/.cursor/rules/awesome-design-md.mdc"
+    write_if_absent "$SHIMS_DIR/cursor-rule.mdc"          "$PROJECT_ROOT/.cursor/rules/super-design.mdc"
     write_if_absent "$SHIMS_DIR/copilot-instructions.md"  "$PROJECT_ROOT/.github/copilot-instructions.md"
     write_if_absent "$SHIMS_DIR/windsurf-rule.md"         "$PROJECT_ROOT/.windsurf/rules/design-system.md"
     write_if_absent "$SHIMS_DIR/continue-rule.md"         "$PROJECT_ROOT/.continue/rules/design-system.md"
@@ -389,7 +389,7 @@ cleanup_snapshot
 
 # -------- Summary --------
 ok ""
-ok "✓ awesome-design-md $INSTALLER_VERSION installed"
+ok "✓ super-design $INSTALLER_VERSION installed"
 ok ""
 if [ "$DRY_RUN" -eq 1 ]; then
   ok "(dry-run — no files changed)"

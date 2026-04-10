@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/awesome-design-md/scripts/load-design-context.sh\"",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/super-design/scripts/load-design-context.sh\"",
             "timeout": 10
           }
         ]
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/awesome-design-md/scripts/inject-design-context.sh\"",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/super-design/scripts/inject-design-context.sh\"",
             "timeout": 5
           }
         ]
@@ -29,12 +29,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/awesome-design-md/scripts/validate-tokens.sh\"",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/super-design/scripts/validate-tokens.sh\"",
             "timeout": 15
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/awesome-design-md/scripts/validate-component.sh\"",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/super-design/scripts/validate-component.sh\"",
             "timeout": 15
           }
         ]

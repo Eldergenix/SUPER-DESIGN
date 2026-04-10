@@ -1,6 +1,6 @@
-# Changelog
+# Changelog — Super Design
 
-All notable changes to the `awesome-design-md` skill are documented here.
+All notable changes to the `super-design` skill are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [1.1.0] — 2026-04-10
@@ -22,7 +22,7 @@ Production hardening release — fixes every issue a senior designer/dev would r
 - **`templates/configs/.stylelintrc.design-md.json`** — ship-ready Stylelint config with `color-no-hex`, declaration-value disallow lists, custom-property pattern enforcement.
 - **`templates/configs/.prettierrc.design-md.json`** — Prettier with `prettier-plugin-tailwindcss` + `cva`/`cn`/`clsx` function recognition.
 - **`templates/configs/playwright.design-md.config.ts`** — visual-regression config testing at every required breakpoint + dark mode + forced-colors + reduced-motion.
-- **Install manifest** (`.claude/awesome-design-md.install.json`) — version tracking for migration detection.
+- **Install manifest** (`.claude/super-design.install.json`) — version tracking for migration detection.
 
 ### Changed
 - **SKILL.md** rewritten as concise, scannable, imperative prose with **concrete before/after code examples** (was 1235 words of lecture; now ~1100 words of actionable specs).

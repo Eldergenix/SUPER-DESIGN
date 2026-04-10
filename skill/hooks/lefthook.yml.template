@@ -14,21 +14,21 @@ pre-commit:
       glob: "**/*.{tsx,jsx,ts,js,vue,svelte,css,scss,astro}"
       run: |
         for f in {staged_files}; do
-          bash .claude/skills/awesome-design-md/scripts/validate-tokens.sh "$f" || exit 1
+          bash .claude/skills/super-design/scripts/validate-tokens.sh "$f" || exit 1
         done
 
     validate-components:
       glob: "**/*.{tsx,jsx,vue,svelte}"
       run: |
         for f in {staged_files}; do
-          bash .claude/skills/awesome-design-md/scripts/validate-component.sh "$f" || exit 1
+          bash .claude/skills/super-design/scripts/validate-component.sh "$f" || exit 1
         done
 
     quality-score:
       glob: "**/*.{tsx,jsx,vue,svelte}"
       run: |
         for f in {staged_files}; do
-          score=$(bash .claude/skills/awesome-design-md/scripts/quality-score.sh "$f" | python3 -c 'import sys,json; print(json.load(sys.stdin)["totalScore"])')
+          score=$(bash .claude/skills/super-design/scripts/quality-score.sh "$f" | python3 -c 'import sys,json; print(json.load(sys.stdin)["totalScore"])')
           if [ "$score" -lt 60 ]; then
             echo "✗ $f scored $score/100 (minimum 60) — grade F, please refine"
             exit 1

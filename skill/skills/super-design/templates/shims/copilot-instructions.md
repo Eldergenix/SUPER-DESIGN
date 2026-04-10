@@ -12,4 +12,4 @@ When generating UI code:
 - Min 44×44 touch targets, 8px gap
 - Responsive at 320 / 375 / 768 / 1024 / 1440 / 1920
 
-The full design-system skill (including framework adapters for Tailwind v3/v4, ShadCN, MUI, Radix, and Geist) is at `.claude/skills/awesome-design-md/`.
+The full design-system skill (including framework adapters for Tailwind v3/v4, ShadCN, MUI, Radix, and Geist) is at `.claude/skills/super-design/`.

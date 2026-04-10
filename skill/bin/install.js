@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Node.js installer wrapper for awesome-design-md.
+ * Node.js installer wrapper for super-design.
  *
  * Cross-platform:
  *   - macOS / Linux → runs scripts/install.sh via /bin/bash
@@ -8,11 +8,11 @@
  *                     or falls back to pure-Node copy if bash is unavailable.
  *
  * Usage (npm):
- *   npx awesome-design-md                  → ~/.claude/skills (global)
- *   npx awesome-design-md --project        → .claude/skills + hooks + shims
- *   npx awesome-design-md --both
- *   npx awesome-design-md --uninstall
- *   npx awesome-design-md --dry-run --project
+ *   npx super-design                  → ~/.claude/skills (global)
+ *   npx super-design --project        → .claude/skills + hooks + shims
+ *   npx super-design --both
+ *   npx super-design --uninstall
+ *   npx super-design --dry-run --project
  */
 
 import { spawnSync } from 'node:child_process';
@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, '..');
-const skillSrc = path.join(packageRoot, 'skills', 'awesome-design-md');
+const skillSrc = path.join(packageRoot, 'skills', 'super-design');
 const installSh = path.join(skillSrc, 'scripts', 'install.sh');
 
 const args = process.argv.slice(2);
@@ -100,8 +100,8 @@ function runPureNodeFallback() {
   const force  = args.includes('--force');
   const projectRoot = process.cwd();
 
-  const homeSkills    = path.join(os.homedir(), '.claude', 'skills', 'awesome-design-md');
-  const projectSkills = path.join(projectRoot,  '.claude', 'skills', 'awesome-design-md');
+  const homeSkills    = path.join(os.homedir(), '.claude', 'skills', 'super-design');
+  const projectSkills = path.join(projectRoot,  '.claude', 'skills', 'super-design');
 
   const EXCLUDES = new Set(['.git', '.DS_Store', '__pycache__', 'node_modules']);
 
@@ -150,7 +150,7 @@ function runPureNodeFallback() {
     copyIfAbsent(path.join(skillSrc, 'templates', 'AGENTS.md'),       path.join(projectRoot, 'AGENTS.md'));
     copyIfAbsent(path.join(shims, 'CLAUDE.md'),                       path.join(projectRoot, 'CLAUDE.md'));
     copyIfAbsent(path.join(shims, 'GEMINI.md'),                       path.join(projectRoot, 'GEMINI.md'));
-    copyIfAbsent(path.join(shims, 'cursor-rule.mdc'),                 path.join(projectRoot, '.cursor', 'rules', 'awesome-design-md.mdc'));
+    copyIfAbsent(path.join(shims, 'cursor-rule.mdc'),                 path.join(projectRoot, '.cursor', 'rules', 'super-design.mdc'));
     copyIfAbsent(path.join(shims, 'copilot-instructions.md'),         path.join(projectRoot, '.github', 'copilot-instructions.md'));
     copyIfAbsent(path.join(shims, 'windsurf-rule.md'),                path.join(projectRoot, '.windsurf', 'rules', 'design-system.md'));
     copyIfAbsent(path.join(shims, 'continue-rule.md'),                path.join(projectRoot, '.continue', 'rules', 'design-system.md'));

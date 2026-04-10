@@ -1,0 +1,151 @@
+/* Generated from DESIGN.md by super-design generate-theme.mjs */
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* color.neutral */
+  --color-neutral-50: #f7f8f8;
+  --color-neutral-100: #e2e4e7;
+  --color-neutral-200: #d0d6e0;
+  --color-neutral-300: #8a8f98;
+  --color-neutral-400: #62666d;
+  --color-neutral-500: #3e3e44;
+  --color-neutral-600: #34343a;
+  --color-neutral-700: #28282c;
+  --color-neutral-800: #23252a;
+  --color-neutral-900: #191a1b;
+  --color-neutral-950: #0f1011;
+  --color-neutral-975: #08090a;
+  --color-neutral-999: #010102;
+
+  /* color.brand */
+  --color-brand-400: #828fff;
+  --color-brand-500: #7170ff;
+  --color-brand-600: #5e6ad2;
+  --color-brand-700: #4c57b0;
+  --color-brand-800: #3b4585;
+  --color-brand-900: #7a7fad;
+
+  /* color.status */
+  --color-success-500: #10b981;
+  --color-success-600: #27a644;
+  --color-warning-500: #f2c94c;
+  --color-danger-500: #eb5757;
+  --color-info-500: #7170ff;
+
+  /* semantic (light) */
+  --color-bg: #ffffff;
+  --color-bg-panel: #f7f8f8;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f3f4f5;
+  --color-surface-hover: #f5f6f7;
+  --color-fg: #08090a;
+  --color-fg-muted: #62666d;
+  --color-fg-subtle: #8a8f98;
+  --color-fg-faint: #62666d;
+  --color-border: #d0d6e0;
+  --color-border-strong: #8a8f98;
+  --color-border-subtle: #e2e4e7;
+  --color-accent: #5e6ad2;
+  --color-accent-hover: #7170ff;
+  --color-accent-muted: #7a7fad;
+  --color-ring: #7170ff;
+  --color-success: #10b981;
+  --color-warning: #f2c94c;
+  --color-danger: #eb5757;
+
+  /* typography */
+  --font-sans: "Inter Variable", "SF Pro Display", -apple-system, system-ui, Segoe UI, Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: "Berkeley Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 510;
+  --font-weight-semibold: 590;
+
+  /* spacing */
+  --spacing: 0.25rem;  /* 4px base */
+  --inset-xs: 4px;
+  --inset-sm: 8px;
+  --inset-md: 12px;
+  --inset-lg: 16px;
+  --inset-xl: 24px;
+  --inset-2xl: 32px;
+  --stack-xs: 2px;
+  --stack-sm: 4px;
+  --stack-md: 8px;
+  --stack-lg: 12px;
+  --stack-xl: 16px;
+  --stack-2xl: 24px;
+  --stack-3xl: 32px;
+  --inline-xs: 2px;
+  --inline-sm: 4px;
+  --inline-md: 6px;
+  --inline-lg: 8px;
+  --inline-xl: 12px;
+
+  /* radii */
+  --radius-micro: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 22px;
+  --radius-pill: 9999px;
+  --radius-full: 50%;
+
+  /* shadows */
+  --shadow-none: none;
+  --shadow-subtle: 0 1.2px 0 0 rgba(0, 0, 0, 0.03);
+  --shadow-ring: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-popover: 0 8px 24px -8px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-focus: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-ring);
+
+  /* motion */
+  --duration-instant: 0ms;
+  --duration-fast: 80ms;
+  --duration-base: 150ms;
+  --duration-slow: 240ms;
+}
+
+:root { color-scheme: light; }
+.dark {
+  color-scheme: dark;
+  --color-bg: #08090a;
+  --color-bg-panel: #0f1011;
+  --color-surface: #191a1b;
+  --color-surface-raised: #28282c;
+  --color-surface-hover: #34343a;
+  --color-fg: #f7f8f8;
+  --color-fg-muted: #d0d6e0;
+  --color-fg-subtle: #8a8f98;
+  --color-fg-faint: #62666d;
+  --color-border: #23252a;
+  --color-border-strong: #28282c;
+  --color-border-subtle: #191a1b;
+  --color-accent: #7170ff;
+  --color-accent-hover: #828fff;
+  --color-accent-muted: #7a7fad;
+  --color-ring: #828fff;
+  --color-success: #10b981;
+  --color-warning: #f2c94c;
+  --color-danger: #eb5757;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root { --color-border: var(--color-border-strong, var(--color-border)); }
+}

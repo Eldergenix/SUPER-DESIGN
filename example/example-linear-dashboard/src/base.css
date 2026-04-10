@@ -1,0 +1,135 @@
+/*
+ * base.css — manual base layer.
+ *
+ * src/index.css is generated from DESIGN.md by the Super Design skill and
+ * should NOT be edited by hand (it gets overwritten on every
+ * `npm run theme:generate`). This file is the hand-written complement:
+ * body reset, Inter Variable font loading, and the OpenType feature
+ * settings that give Linear's Inter its distinctive geometric character.
+ *
+ * Token references only — no literal hex/rgb values.
+ */
+
+@import "./index.css";
+
+/* Inter Variable + ss03/cv01 alternates, loaded from Google's variable font CDN.
+   rsms.me hosts the official Inter Variable WOFF2. */
+@import url("https://rsms.me/inter/inter.css");
+
+/*
+ * Extra @theme block for the text-size scale.
+ *
+ * The skill's generate-theme.mjs currently emits color, font-weight,
+ * spacing, radius, shadow, and motion tokens — but not font-size.
+ * Linear's type scale from DESIGN.md §3 is declared here as a Tailwind v4
+ * `--text-*` set so `text-label`, `text-caption`, etc. work as utilities.
+ *
+ * Tailwind v4 merges multiple @theme blocks across the input cascade, so
+ * this sits happily alongside the @theme in the generated index.css.
+ *
+ * Values come straight from DESIGN.md §3 — if you edit the sizes there,
+ * mirror the change here (or wait for generate-theme.mjs to learn
+ * font.size tokens).
+ */
+@theme {
+  --text-micro: 0.6875rem;         /* 11px */
+  --text-micro--line-height: 1.4;
+  --text-caption: 0.75rem;         /* 12px */
+  --text-caption--line-height: 1.4;
+  --text-label: 0.8125rem;         /* 13px */
+  --text-label--line-height: 1.4;
+  --text-body: 0.9375rem;          /* 15px */
+  --text-body--line-height: 1.5;
+  --text-body-lg: 1.125rem;        /* 18px */
+  --text-body-lg--line-height: 1.6;
+  --text-heading-3: 1.25rem;       /* 20px */
+  --text-heading-3--line-height: 1.33;
+  --text-heading-3--letter-spacing: -0.015em;
+  --text-heading-2: 1.5rem;        /* 24px */
+  --text-heading-2--line-height: 1.33;
+  --text-heading-2--letter-spacing: -0.012em;
+  --text-heading-1: 2rem;          /* 32px */
+  --text-heading-1--line-height: 1.13;
+  --text-heading-1--letter-spacing: -0.022em;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    /* Linear's OpenType identity — non-negotiable per the DESIGN.md. */
+    font-feature-settings: "cv01", "ss03";
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-size: 0.9375rem; /* 15px — Linear's default reading size */
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+    letter-spacing: -0.165px;
+  }
+
+  /* Scrollbars — thin, token-colored, never default browser chrome */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-strong) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--color-fg-faint);
+    background-clip: padding-box;
+  }
+
+  /* Focus-visible: double-layer ring from --shadow-focus */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-md);
+  }
+
+  /* Forced-colors mode: interactive surfaces stay visible on Windows HC */
+  @media (forced-colors: active) {
+    button,
+    [role="button"],
+    a {
+      border: 1px solid transparent;
+      forced-color-adjust: none;
+    }
+  }
+}

@@ -1,45 +1,210 @@
 #!/usr/bin/env node
 /**
- * Node.js installer for awesome-design-md skill.
- * Wrapper around scripts/install.sh that works on all platforms including Windows (via Git Bash / WSL).
+ * Node.js installer wrapper for awesome-design-md.
  *
- * Usage:
- *   npx awesome-design-md                  → global install to ~/.claude/skills
- *   npx awesome-design-md --project        → project install to .claude/skills + hooks
- *   npx awesome-design-md --both           → both
- *   npx awesome-design-md --uninstall      → uninstall
+ * Cross-platform:
+ *   - macOS / Linux → runs scripts/install.sh via /bin/bash
+ *   - Windows      → runs scripts/install.sh via Git Bash (C:\Program Files\Git\bin\bash.exe)
+ *                     or falls back to pure-Node copy if bash is unavailable.
+ *
+ * Usage (npm):
+ *   npx awesome-design-md                  → ~/.claude/skills (global)
+ *   npx awesome-design-md --project        → .claude/skills + hooks + shims
+ *   npx awesome-design-md --both
+ *   npx awesome-design-md --uninstall
+ *   npx awesome-design-md --dry-run --project
  */
 
 import { spawnSync } from 'node:child_process';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
+import path from 'node:path';
+import os from 'node:os';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, '..');
-const installSh = path.join(packageRoot, 'skills/awesome-design-md/scripts/install.sh');
-
-if (!fs.existsSync(installSh)) {
-  console.error(`[awesome-design-md] install.sh not found at ${installSh}`);
-  process.exit(1);
-}
+const skillSrc = path.join(packageRoot, 'skills', 'awesome-design-md');
+const installSh = path.join(skillSrc, 'scripts', 'install.sh');
 
 const args = process.argv.slice(2);
 
-// Make sure the script is executable
-try { fs.chmodSync(installSh, 0o755); } catch {}
+function log(msg) { process.stdout.write(`[design-md] ${msg}\n`); }
+function err(msg) { process.stderr.write(`[design-md] ${msg}\n`); }
 
-const shell = process.platform === 'win32' ? 'bash.exe' : 'bash';
-const result = spawnSync(shell, [installSh, ...args], {
-  stdio: 'inherit',
-  env: { ...process.env, PROJECT_ROOT: process.cwd() },
-});
+// ------------------------------------------------------------------
+// 1. Try bash (preferred — runs the actual installer with rollback etc.)
+// ------------------------------------------------------------------
 
-if (result.error) {
-  console.error(`[awesome-design-md] Failed to run installer: ${result.error.message}`);
-  console.error('[awesome-design-md] Make sure bash is available on your PATH.');
-  console.error('[awesome-design-md] On Windows, install Git Bash or WSL.');
+function findBash() {
+  // POSIX first
+  for (const candidate of ['/bin/bash', '/usr/bin/bash', '/usr/local/bin/bash']) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  // Windows Git Bash
+  if (process.platform === 'win32') {
+    for (const candidate of [
+      'C:\\Program Files\\Git\\bin\\bash.exe',
+      'C:\\Program Files (x86)\\Git\\bin\\bash.exe',
+      `${os.homedir()}\\AppData\\Local\\Programs\\Git\\bin\\bash.exe`,
+    ]) {
+      if (fs.existsSync(candidate)) return candidate;
+    }
+  }
+  // PATH lookup
+  const whichCmd = process.platform === 'win32' ? 'where' : 'which';
+  const result = spawnSync(whichCmd, ['bash'], { encoding: 'utf8' });
+  if (result.status === 0) {
+    return result.stdout.trim().split(/\r?\n/)[0];
+  }
+  return null;
+}
+
+function runBashInstaller() {
+  const bash = findBash();
+  if (!bash) return false;
+
+  try {
+    fs.chmodSync(installSh, 0o755);
+  } catch {}
+
+  // Normalize path for Git Bash on Windows (C:\ → /c/)
+  let shPath = installSh;
+  if (process.platform === 'win32') {
+    shPath = installSh.replace(/^([A-Z]):/, (_, d) => `/${d.toLowerCase()}`).replace(/\\/g, '/');
+  }
+
+  const result = spawnSync(bash, [shPath, ...args], {
+    stdio: 'inherit',
+    env: { ...process.env, PROJECT_ROOT: process.cwd() },
+  });
+
+  if (result.error) {
+    err(`bash installer failed: ${result.error.message}`);
+    return false;
+  }
+  process.exit(result.status ?? 0);
+}
+
+// ------------------------------------------------------------------
+// 2. Pure-Node fallback — copies files only, no hook merge or rollback.
+//    Runs when bash is unavailable (plain Windows).
+// ------------------------------------------------------------------
+
+function runPureNodeFallback() {
+  log('bash not found — running pure-Node fallback (limited: no hook merge, no rollback)');
+
+  const mode = args.includes('--project') ? 'project'
+             : args.includes('--both')    ? 'both'
+             : 'global';
+  const dryRun = args.includes('--dry-run');
+  const force  = args.includes('--force');
+  const projectRoot = process.cwd();
+
+  const homeSkills    = path.join(os.homedir(), '.claude', 'skills', 'awesome-design-md');
+  const projectSkills = path.join(projectRoot,  '.claude', 'skills', 'awesome-design-md');
+
+  const EXCLUDES = new Set(['.git', '.DS_Store', '__pycache__', 'node_modules']);
+
+  function copyDir(src, dest) {
+    if (dryRun) { log(`[dry-run] copy ${src} → ${dest}`); return; }
+    fs.mkdirSync(dest, { recursive: true });
+    for (const name of fs.readdirSync(src)) {
+      if (EXCLUDES.has(name)) continue;
+      const srcPath = path.join(src, name);
+      const destPath = path.join(dest, name);
+      const stat = fs.statSync(srcPath);
+      if (stat.isDirectory()) {
+        copyDir(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+        // Preserve exec bit on .sh/.mjs
+        if (/\.(sh|mjs)$/.test(name)) {
+          try { fs.chmodSync(destPath, 0o755); } catch {}
+        }
+      }
+    }
+  }
+
+  function copyIfAbsent(src, dest) {
+    if (fs.existsSync(dest) && !force) {
+      log(`exists (use --force): ${dest}`);
+      return;
+    }
+    if (dryRun) { log(`[dry-run] write ${dest}`); return; }
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.copyFileSync(src, dest);
+    log(`wrote ${dest}`);
+  }
+
+  if (mode === 'global' || mode === 'both') {
+    copyDir(skillSrc, homeSkills);
+    log(`Copied skill → ${homeSkills}`);
+  }
+
+  if (mode === 'project' || mode === 'both') {
+    copyDir(skillSrc, projectSkills);
+    log(`Copied skill → ${projectSkills}`);
+
+    // Shim files
+    const shims = path.join(skillSrc, 'templates', 'shims');
+    copyIfAbsent(path.join(skillSrc, 'templates', 'AGENTS.md'),       path.join(projectRoot, 'AGENTS.md'));
+    copyIfAbsent(path.join(shims, 'CLAUDE.md'),                       path.join(projectRoot, 'CLAUDE.md'));
+    copyIfAbsent(path.join(shims, 'GEMINI.md'),                       path.join(projectRoot, 'GEMINI.md'));
+    copyIfAbsent(path.join(shims, 'cursor-rule.mdc'),                 path.join(projectRoot, '.cursor', 'rules', 'awesome-design-md.mdc'));
+    copyIfAbsent(path.join(shims, 'copilot-instructions.md'),         path.join(projectRoot, '.github', 'copilot-instructions.md'));
+    copyIfAbsent(path.join(shims, 'windsurf-rule.md'),                path.join(projectRoot, '.windsurf', 'rules', 'design-system.md'));
+    copyIfAbsent(path.join(shims, 'continue-rule.md'),                path.join(projectRoot, '.continue', 'rules', 'design-system.md'));
+    copyIfAbsent(path.join(shims, 'cline-rule.md'),                   path.join(projectRoot, '.clinerules', 'design-system.md'));
+
+    // DESIGN.md bootstrap
+    if (!fs.existsSync(path.join(projectRoot, 'DESIGN.md'))) {
+      copyIfAbsent(path.join(skillSrc, 'DESIGN.md'), path.join(projectRoot, 'DESIGN.md'));
+    }
+
+    // Hook merge via pure Node
+    const settingsPath = path.join(projectRoot, '.claude', 'settings.json');
+    const templatePath = path.join(skillSrc, 'templates', 'settings.json.template');
+
+    if (fs.existsSync(templatePath)) {
+      if (!dryRun) {
+        fs.mkdirSync(path.dirname(settingsPath), { recursive: true });
+        let base = {};
+        if (fs.existsSync(settingsPath)) {
+          try { base = JSON.parse(fs.readFileSync(settingsPath, 'utf8')); }
+          catch { base = {}; }
+        }
+        const tmpl = JSON.parse(fs.readFileSync(templatePath, 'utf8'));
+        base.hooks = base.hooks || {};
+        for (const [event, matchers] of Object.entries(tmpl.hooks || {})) {
+          const existing = base.hooks[event] = base.hooks[event] || [];
+          const existingCmds = new Set();
+          for (const m of existing) for (const h of (m.hooks || [])) if (h.command) existingCmds.add(h.command);
+          for (const m of matchers) {
+            const newHooks = (m.hooks || []).filter(h => !existingCmds.has(h.command));
+            if (newHooks.length) existing.push({ ...m, hooks: newHooks });
+          }
+        }
+        fs.writeFileSync(settingsPath, JSON.stringify(base, null, 2));
+        log(`merged hooks into ${settingsPath}`);
+      } else {
+        log(`[dry-run] would merge hooks into ${settingsPath}`);
+      }
+    }
+  }
+
+  log('✓ pure-Node install complete');
+  log('Note: rollback/snapshot not available in fallback mode — use bash installer for production.');
+}
+
+// ------------------------------------------------------------------
+// Entry
+// ------------------------------------------------------------------
+
+if (!fs.existsSync(installSh)) {
+  err(`install.sh not found at ${installSh}`);
   process.exit(1);
 }
 
-process.exit(result.status ?? 0);
+if (runBashInstaller() === false) {
+  runPureNodeFallback();
+}

@@ -14,6 +14,13 @@ grep -rE '@import\s+"tailwindcss"|@theme\s*\{' ./src ./app ./styles 2>/dev/null
 
 ## Strategy
 
+Two modes:
+
+- **Extend mode** (default, recommended) — add tokens alongside Tailwind's defaults. `bg-red-500` still works, plus your `bg-accent` etc.
+- **Replace mode** — nuke the default palette with `--color-*: initial` and declare only your tokens. Use this when you want a strict closed system and don't want agents to fall back to Tailwind defaults.
+
+**Rule:** use **extend** unless the user explicitly asks for a strict closed system. Generated code can be one-click upgraded to replace mode later.
+
 Convert the DESIGN.md token tables directly into an `@theme` block in `globals.css` (or `app.css`). Every token automatically becomes BOTH a CSS custom property on `:root` AND a utility class.
 
 ## Template — full design-token `@theme` block

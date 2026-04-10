@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/stylelintrc",
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-no-hex": [true, {
+      "message": "Use var(--color-*) tokens from DESIGN.md instead of hex literals",
+      "severity": "error"
+    }],
+    "color-function-notation": "modern",
+    "color-hex-length": "short",
+
+    "declaration-property-value-disallowed-list": {
+      "/^(color|background-color|border-color|fill|stroke)$/": ["/^#/", "/^rgb\\(/", "/^rgba\\(/", "/^hsl\\(/", "/^hsla\\(/"],
+      "/^(margin|padding|gap|font-size|border-radius|line-height)$/": ["/^\\d+px$/"]
+    },
+
+    "custom-property-pattern": "^(color|space|radius|font|shadow|duration|ease|inset|stack|inline|text|leading|tracking|semantic|delay)(-|$)",
+
+    "length-zero-no-unit": true,
+    "declaration-no-important": [true, { "severity": "warning" }],
+
+    "selector-max-specificity": ["0,4,0", { "severity": "warning" }],
+    "selector-max-compound-selectors": [4, { "severity": "warning" }],
+    "no-descending-specificity": null,
+
+    "media-feature-name-no-unknown": [true, { "ignoreMediaFeatureNames": ["prefers-reduced-transparency"] }],
+
+    "at-rule-no-unknown": [true, {
+      "ignoreAtRules": ["theme", "custom-variant", "utility", "source", "apply", "tailwind", "layer", "config", "container", "variant", "plugin"]
+    }]
+  }
+}

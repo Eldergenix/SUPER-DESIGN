@@ -1,133 +1,185 @@
 ---
 name: awesome-design-md
-description: Production-grade design system skill. Reads DESIGN.md, sets up theme tokens for Tailwind v3/v4, ShadCN, MUI, Radix, or Geist, and enforces consistent UI/UX via quality gates on every edit. Use whenever the user asks to style, theme, build, refine, or recreate UI — or uploads a screenshot to rebuild. Auto-triggers on design, UI, UX, component, styling, theme, token, layout, responsive, accessibility, animation, micro-interaction, or screenshot work.
+description: Use when the user asks you to build, style, theme, refine, audit, or recreate UI — or uploads a screenshot to rebuild. Reads DESIGN.md as a closed token layer, detects the project's framework (Tailwind v4/v3, ShadCN, MUI, Radix, Geist), and enforces production design rules (tokens only, full state matrix, WCAG 2.2 AA, responsive, minimal motion, max 300 LOC/component) via PostToolUse hooks.
 allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep, Bash
 ---
 
-# Awesome DESIGN.md — Production Design System Skill
+# awesome-design-md
 
-You are now operating as a **production design system enforcer**. Your job is to make every UI edit consistent, token-driven, accessible, responsive, and visually faithful to the project's `DESIGN.md`.
+You enforce a production design system. Read `DESIGN.md` before editing UI. Emit tokens, never literals. Ship full state coverage. Validate with the bundled scripts.
 
-## Operating Principles (non-negotiable)
+## The one-paragraph rule
 
-1. **DESIGN.md is law.** Before any UI edit, read the project's `DESIGN.md`. If one does not exist, use `${CLAUDE_SKILL_DIR}/DESIGN.md` (the enhanced template) and propose it to the user.
-2. **No hardcoded values.** Colors, spacing, radii, shadows, durations, font sizes MUST be token references (`var(--color-*)`, `bg-primary`, `theme.palette.primary.main`, etc.). Never emit literal `#hex`, `rgb()`, `hsl()`, or unscaled `px` values in component code.
-3. **Every component ships with its full state matrix.** default, hover, focus-visible, active, disabled, and (where applicable) loading, error, selected, checked. A component without all required states is INCOMPLETE.
-4. **Motion is minimal but deliberate.** Use only the animation tokens in `references/animation-tokens.md`. Default is static. Animate only with a stated purpose. Always guard with `prefers-reduced-motion`.
-5. **No monolithic components.** Max 300 LOC per component file (warn) / 500 LOC (hard stop). Extract sub-components when JSX nests >4 deep or when responsibilities split.
-6. **Responsive by default.** Every layout must pass at 320 / 375 / 768 / 1024 / 1440 / 1920 widths. Use container queries for reusable components, media queries for page shells.
-7. **Accessibility is a gate, not a feature.** WCAG 2.2 AA minimum. 3px focus ring with 3:1 contrast. 44×44 touch targets. Full keyboard navigation. ARIA per `references/state-matrix.md`.
+Any UI code you write references `DESIGN.md` tokens by name. No `#hex`, no `rgb()/hsl()`, no raw `px` outside the scale, no inline `style={{ color: ... }}`. Every interactive element defines `hover`, `focus-visible`, `active`, `disabled` — buttons add `loading`, inputs add `error` and `readonly`. Focus rings use `:focus-visible` with a double-layer box-shadow for 3:1 contrast at all offsets. Motion is `transform` and `opacity` only, under 300ms, guarded by `prefers-reduced-motion`. Files stay under 300 LOC. Layouts pass at 320/375/768/1024/1440/1920. Run `bash scripts/test.sh <file>` before declaring done — target score ≥ 90.
 
-## Workflow: Starting a Design Task
+## Before / after — the discipline in 5 seconds
 
-When the user asks you to style / build / refine / recreate UI:
-
-### Step 1 — Detect the project
-Run `bash ${CLAUDE_SKILL_DIR}/scripts/detect-framework.sh` to identify:
-- CSS framework (Tailwind v4 / Tailwind v3 / vanilla CSS / CSS Modules)
-- Component library (ShadCN / MUI / Radix Themes / Radix Primitives / Geist / none)
-- Project type (Next.js / Vite / Remix / Astro / SvelteKit / bare)
-- Existing DESIGN.md at repo root
-
-### Step 2 — Load design tokens
-- If `DESIGN.md` exists → read it fully. Treat it as the closed token layer.
-- If it does not exist → ask the user which site from `${CLAUDE_SKILL_DIR}/references/` to start from OR offer the blank template at `${CLAUDE_SKILL_DIR}/DESIGN.md`.
-- Convert the DESIGN.md tokens into the framework's native format using the matching adapter in `${CLAUDE_SKILL_DIR}/references/framework-adapters/`:
-  - Tailwind v4 → `@theme` block in `globals.css`
-  - Tailwind v3 → `tailwind.config.{js,ts}` + CSS variable layer
-  - ShadCN → `globals.css` HSL triplets under `:root` and `.dark`
-  - MUI → `createTheme()` in `theme.ts` wrapped by `ThemeProvider`
-  - Radix → `<Theme>` provider props + CSS variable overrides
-  - Geist → `GeistSans/GeistMono` + CSS variable overrides
-
-### Step 3 — Build the component(s)
-Follow `references/component-quality-gates.md`. Each component MUST:
-- Use only token references (no literal colors, no unscaled px)
-- Define every required state from `references/state-matrix.md`
-- Include hover, focus-visible, active, disabled (and loading / error where applicable)
-- Use `:focus-visible` not `:focus`
-- Respect `prefers-reduced-motion`
-- Hit 44×44 min touch targets
-- Pass axe-core with 0 violations
-- Stay under 300 LOC per file
-
-### Step 4 — Validate
-After every Edit/Write, the installed hook (`scripts/validate-tokens.sh`) will run automatically. If it reports a violation, FIX IT IMMEDIATELY before moving on — do not accumulate tech debt.
-
-You can also manually invoke:
-- `bash ${CLAUDE_SKILL_DIR}/scripts/validate-tokens.sh <file>` — token usage audit
-- `bash ${CLAUDE_SKILL_DIR}/scripts/validate-component.sh <file>` — LOC / complexity / state coverage
-- `bash ${CLAUDE_SKILL_DIR}/scripts/quality-score.sh <file>` — 0–100 composite score
-
-### Step 5 — Verify visually (if reference exists)
-If the user provided a screenshot or there is an existing rendered reference, run the visual diff loop:
-```bash
-node ${CLAUDE_SKILL_DIR}/scripts/visual-diff.mjs <reference.png> <actual.png> <diff.png> 0.1
+**❌ Rejected by the hook:**
+```tsx
+<button
+  style={{ background: '#5e6ad2', padding: '17px' }}
+  className="rounded-[6px] hover:bg-[#828fff]"
+  onClick={submit}
+>
+  Save
+</button>
 ```
-Target: score ≥95 for component recreation, ≥99 for pixel-perfect port. If below target, open `diff.png`, identify the regions with red highlighting, and iterate.
+Rejected for: literal hex (×2), off-scale px, arbitrary Tailwind value, no `:focus-visible`, no `:disabled`, no `:active`, no min size, no `type`, no `aria-busy` on async click.
 
-## Workflow: Screenshot → Code
+**✓ Accepted:**
+```tsx
+<Button variant="primary" size="md" loading={isPending} onClick={submit}>
+  Save
+</Button>
+```
+With a `Button` that reads:
+```tsx
+// components/ui/button.tsx — 92 LOC
+const buttonVariants = cva(
+  [
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap",
+    "rounded-md font-medium select-none",
+    "transition-[background-color,box-shadow,transform] duration-fast ease-out",
+    "focus-visible:outline-none",
+    "focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_5px_var(--color-focus-ring)]",
+    "active:scale-[0.98]",
+    "disabled:opacity-50 disabled:pointer-events-none",
+    "aria-busy:opacity-70 aria-busy:cursor-wait",
+    "forced-colors:border forced-colors:border-[ButtonText]",
+    "min-h-11 min-w-11",
+  ].join(" "),
+  {
+    variants: {
+      variant: {
+        primary:   "bg-accent text-accent-fg hover:bg-accent-hover",
+        secondary: "bg-surface text-fg border border-border hover:bg-surface-raised",
+        ghost:     "bg-transparent text-fg hover:bg-surface-raised",
+        danger:    "bg-danger text-white hover:brightness-110",
+      },
+      size: { sm: "h-9 px-3 text-sm", md: "h-11 px-4", lg: "h-12 px-6 text-base" },
+    },
+    defaultVariants: { variant: "primary", size: "md" },
+  }
+);
+```
 
-When the user provides a screenshot to recreate, follow the **7-pass extraction loop** in `references/screenshot-to-code-workflow.md`. Summary:
+Every token resolves through `DESIGN.md`. No magic numbers.
 
-1. **Layout pass** — 12-col grid decomposition, region tree, confidence per region
-2. **Color pass** — per-region bg/fg/accent, OCR-grounded, ΔE2000 < 5 against reference
-3. **Typography pass** — OCR + font size/weight/tracking, snap to scale, ≤5 type styles
-4. **Spacing & components pass** — snap to 4px/8px base, identify primitives
-5. **Reconcile pass** — diff extracted tokens against existing DESIGN.md; classify each as EXACT_MATCH / NEAR_MATCH / NEW. Propose a DESIGN.md patch for any NEW tokens and get user approval before adding.
-6. **Code gen pass** — use ONLY tokens from reconciled DESIGN.md, framework-native
-7. **Verify pass** — render, screenshot, self-score (layout / color / type / spacing / components), iterate up to 3 times
+## Workflow: starting a UI task
 
-Never silently invent tokens. Every new token gets added to DESIGN.md with a human-approved PR-style diff.
+**Step 1 — Detect.**
+```bash
+bash "${CLAUDE_SKILL_DIR}/scripts/detect-framework.sh"
+```
+Returns JSON with `cssFramework`, `tailwindVersion`, `componentLibrary`, `projectFramework`, `designMd`. Branch on `recommendedAdapter`.
 
-## Workflow: Style Refining / Audit
+**Step 2 — Load DESIGN.md.**
+- If it exists → read it completely.
+- If it doesn't → ask: *"I don't see DESIGN.md. Do you want me to (a) bootstrap the template, (b) extract one from a reference in the `awesome-design-md` collection, or (c) extract one from a screenshot?"* Do not proceed without a closed token layer.
 
-When the user asks you to "audit", "review styles", "refine", or "fix inconsistencies":
+**Step 3 — Lint the DESIGN.md.**
+```bash
+bash "${CLAUDE_SKILL_DIR}/scripts/lint-design-md.sh" DESIGN.md
+```
+If it fails schema, stop and fix it first. A broken token layer poisons everything downstream.
 
-1. Glob all component files (`src/**/*.{tsx,jsx,vue,svelte}`, `app/**/*.tsx`, `components/**/*.tsx`)
-2. For each, run `scripts/quality-score.sh` and collect the results
-3. Sort by score ascending — the worst files first
-4. Present a top-10 list to the user with specific issues per file
-5. Fix them in order, using token references and state matrix compliance
-6. Re-run scores; report the delta
+**Step 4 — Generate theme (once per project).**
+```bash
+node "${CLAUDE_SKILL_DIR}/scripts/generate-theme.mjs" DESIGN.md --target=<adapter>
+```
+Emits the framework-native theme file (`@theme` block, `tailwind.config.ts`, `theme.ts`, etc.) wired to the tokens in DESIGN.md. Show the user the diff; get approval before writing.
 
-## Do Not
+**Step 5 — Build the component.**
+- Max 300 LOC per file; extract when you approach it.
+- Every required state from `references/state-matrix.md`.
+- Use the matching adapter in `references/framework-adapters/`.
+- Use `:focus-visible` with the double-ring shadow pattern.
+- Touch targets ≥ 44×44.
+- Mark interactive text with `select-none`; mark inert overlays with `pointer-events-none`.
 
-- Do not invent colors, spacing, or type sizes outside the DESIGN.md closed layer
-- Do not ship a component without hover / focus-visible / disabled (plus active for buttons, loading for async, error for inputs)
-- Do not use `outline: none` without a same-or-better replacement
-- Do not animate `width` / `height` / `top` / `left` / `margin` — only `transform` + `opacity`
-- Do not exceed 300 LOC per file without splitting
-- Do not use `:focus` — always use `:focus-visible`
-- Do not emit inline `style={{ color: "#..." }}` — use classes / theme references
-- Do not skip the `prefers-reduced-motion` guard on animations
-- Do not recommend a CSS framework the user didn't already install; detect and match
+**Step 6 — Validate.**
+```bash
+bash "${CLAUDE_SKILL_DIR}/scripts/test.sh" <file>
+```
+Runs `validate-tokens`, `validate-component`, `quality-score`, and — if a reference PNG exists — `visual-diff`. Blocks on violations; warns on smells; emits a composite score 0–100.
 
-## Bundled References (progressive disclosure — load on demand)
+**Step 7 — Verify contrast.**
+```bash
+node "${CLAUDE_SKILL_DIR}/scripts/contrast-check.mjs" DESIGN.md
+```
+Walks every semantic color pair (fg on bg, accent-fg on accent, border on surface) and asserts WCAG 2.2 AA (4.5:1 text, 3:1 large text + UI, 3:1 focus).
 
-- `DESIGN.md` — enhanced template (use as blank slate)
-- `references/tokens-schema.md` — DTCG token format and naming
-- `references/state-matrix.md` — required states per component + ARIA
-- `references/animation-tokens.md` — duration / easing / recipes
-- `references/responsive-patterns.md` — breakpoints, clamp(), container queries
-- `references/component-quality-gates.md` — LOC / complexity / scoring rubric
-- `references/screenshot-to-code-workflow.md` — 7-pass extraction loop
-- `references/framework-adapters/tailwind-v4.md`
-- `references/framework-adapters/tailwind-v3.md`
-- `references/framework-adapters/shadcn.md`
-- `references/framework-adapters/mui.md`
-- `references/framework-adapters/radix.md`
-- `references/framework-adapters/geist.md`
+## Workflow: screenshot → code
 
-Load each ONLY when you need it — they are large. Start with `SKILL.md` + the specific adapter for the detected framework.
+Follow `references/screenshot-to-code-workflow.md`. The 7-pass loop is encoded as filled prompts with concrete JSON schemas. Do not invent tokens — reconcile against DESIGN.md at pass 5 and get user approval on any NEW tokens.
 
-## Hooks Installed With This Skill
+For dense regions:
+```bash
+bash "${CLAUDE_SKILL_DIR}/scripts/crop-region.sh" input.png <x> <y> <w> <h> out.png
+```
+Crops produce measurably better vision-model accuracy. Use them.
 
-When installed via `scripts/install.sh`, the following hooks are added to `.claude/settings.json`:
+For verification:
+```bash
+node "${CLAUDE_SKILL_DIR}/scripts/screenshot-component.mjs" http://localhost:3000/my-page out.png
+node "${CLAUDE_SKILL_DIR}/scripts/visual-diff.mjs" reference.png out.png diff.png 0.1
+```
+Iterate until `score ≥ 95` (recreation) or `≥ 99` (pixel-perfect port). Cap at 3 iterations — gains plateau.
 
-- **PostToolUse on Edit|Write|MultiEdit → `validate-tokens.sh`** — blocks the edit if it introduces hardcoded hex/rgb/hsl or unscaled px values in a `.{tsx,jsx,vue,svelte,css,scss}` file outside the tokens file itself.
-- **PostToolUse on Edit|Write|MultiEdit → `validate-component.sh`** — warns if LOC > 300, blocks if > 500, and warns on missing state coverage in interactive components.
-- **UserPromptSubmit → `inject-design-context.sh`** — when the user's prompt mentions "style", "theme", "UI", "component", "design", or "screenshot", injects a pointer to `DESIGN.md` and the relevant framework adapter into the context.
-- **SessionStart → `load-design-context.sh`** — reads `DESIGN.md` at session start if present.
+## Workflow: style audit
 
-The install script is idempotent and preserves existing hooks.
+```bash
+bash "${CLAUDE_SKILL_DIR}/scripts/audit.sh" src/
+```
+Walks every component file, emits `{file, score, grade, violations[]}`, sorts by worst. Fix in order. Re-run and report the delta.
+
+## Model-specific notes
+
+- **Claude (3.5/4.x)** — strongest at layout + OCR + iteration. Give it crops for dense regions.
+- **GPT-4o / GPT-5** — strong on component identification. Weak on exact bbox coords; use the 12-grid overlay prompt.
+- **Gemini 1.5+** — native bbox output; can skip grid overlay. Strong on long-context multi-screen flows.
+- **All models** — never trust guessed text. Always OCR-ground typography.
+
+## Hard stops (the hook blocks these)
+
+| Violation | Exit |
+|---|---|
+| Literal `#hex`/`rgb()`/`hsl()` outside token file | block |
+| Inline `style={{ color: ... }}` | block |
+| `<img>` without `alt` | block |
+| File > 500 LOC | block |
+| File with no `focus-visible` but has `onClick`/`<button>` | block |
+| `outline: none` without replacement shadow/outline | warn |
+| Animating `width`/`height`/`top`/`left`/`margin`/`padding` | warn |
+| px outside the allowed scale (> 3 occurrences) | block |
+| Component file with > 12 hooks | block |
+
+Allowed px scale: `0, 1, 2, 3, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 96, 112, 128, 160, 192, 224, 256`, plus viewport breakpoints `320, 375, 768, 1024, 1280, 1440, 1536, 1920`.
+
+## Bundled files — progressive disclosure
+
+Load on demand; each reference is ~400–900 words:
+
+- `DESIGN.md` — the enhanced template (blank slate)
+- `references/tokens-schema.md` — DTCG format, naming, primitive vs semantic vs component layers
+- `references/state-matrix.md` — required states per component + ARIA + keyboard + `STATE_MATRIX.yaml`
+- `references/animation-tokens.md` — duration/easing/recipes + reduced-motion
+- `references/responsive-patterns.md` — breakpoints, clamp(), container queries, touch targets, safe-area
+- `references/component-quality-gates.md` — LOC/complexity/scoring rubric + regex patterns
+- `references/screenshot-to-code-workflow.md` — 7-pass extraction loop with filled prompts
+- `references/framework-adapters/*.md` — concrete theme codegen per framework
+
+Only load what you need. SKILL.md + the single matching adapter is typically enough for one session.
+
+## Do not
+
+- Do not invent tokens. Propose a diff to DESIGN.md and wait for approval.
+- Do not reference primitive tokens (`--color-neutral-900`) from components. Reference the semantic layer (`--color-fg`).
+- Do not use `:focus` — always `:focus-visible` with a double-ring.
+- Do not use `outline: none` without a same-or-greater-visibility replacement.
+- Do not ship without a `forced-colors: active` fallback on interactive surfaces.
+- Do not generate theme files if DESIGN.md is failing the linter.
+- Do not skip `lint-design-md.sh` at session start.
+- Do not write > 300 LOC/component without splitting.
+- Do not animate layout properties.
+- Do not auto-loop visual-diff more than 3 times without surfacing to the user.

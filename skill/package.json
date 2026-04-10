@@ -1,6 +1,6 @@
 {
   "name": "awesome-design-md",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Production-grade design system skill for Claude Code, Cursor, Codex, Gemini, Copilot, and more. Reads DESIGN.md, sets up theme tokens, and enforces UI/UX quality gates via hooks.",
   "bin": {
     "awesome-design-md": "./bin/install.js"

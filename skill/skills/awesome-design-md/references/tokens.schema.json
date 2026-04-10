@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/VoltAgent/awesome-design-md/schema/tokens/v1",
+  "title": "awesome-design-md Token Schema",
+  "description": "DTCG-compatible token schema for DESIGN.md files. Every DESIGN.md must produce tokens that validate against this schema.",
+  "type": "object",
+  "required": ["$schema", "color", "space", "font", "duration", "ease", "radius", "shadow"],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "version":     { "type": "string" },
+
+    "color": {
+      "type": "object",
+      "description": "Three-layer color system: primitive, semantic, component",
+      "required": ["neutral", "brand", "semantic"],
+      "properties": {
+        "neutral": { "$ref": "#/$defs/colorScale" },
+        "brand":   { "$ref": "#/$defs/colorScale" },
+        "status":  { "$ref": "#/$defs/colorGroup" },
+        "semantic": {
+          "type": "object",
+          "required": ["bg", "fg", "surface", "border", "accent", "focus-ring", "danger", "success"],
+          "patternProperties": {
+            "^[a-z][a-z0-9-]*$": {
+              "type": "object",
+              "required": ["$value"],
+              "properties": {
+                "$type":        { "const": "color" },
+                "$value":       { "oneOf": [
+                  { "type": "string", "pattern": "^#([0-9a-fA-F]{3,8})$" },
+                  { "type": "string", "pattern": "^rgb|hsl|oklch|oklab|lab|lch" },
+                  { "type": "string", "pattern": "^\\{color\\." }
+                ]},
+                "$description": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "space": { "$ref": "#/$defs/dimensionGroup" },
+    "inset": { "$ref": "#/$defs/dimensionGroup" },
+    "stack": { "$ref": "#/$defs/dimensionGroup" },
+    "inline": { "$ref": "#/$defs/dimensionGroup" },
+    "radius": { "$ref": "#/$defs/dimensionGroup" },
+
+    "font": {
+      "type": "object",
+      "required": ["family", "weight"],
+      "properties": {
+        "family": {
+          "type": "object",
+          "required": ["sans"],
+          "patternProperties": {
+            "^[a-z][a-z0-9-]*$": {
+              "type": "object",
+              "properties": {
+                "$type":  { "const": "fontFamily" },
+                "$value": {
+                  "oneOf": [
+                    { "type": "string" },
+                    { "type": "array", "items": { "type": "string" } }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "weight": {
+          "type": "object",
+          "required": ["regular", "medium", "semibold", "bold"],
+          "patternProperties": {
+            "^[a-z][a-z0-9-]*$": {
+              "type": "object",
+              "properties": {
+                "$type":  { "const": "fontWeight" },
+                "$value": { "type": "integer", "minimum": 100, "maximum": 900 }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "text": { "$ref": "#/$defs/typographyGroup" },
+    "leading": { "$ref": "#/$defs/numberGroup" },
+    "tracking": { "$ref": "#/$defs/dimensionGroup" },
+
+    "duration": {
+      "type": "object",
+      "required": ["fast", "base", "slow"],
+      "patternProperties": {
+        "^[a-z][a-z0-9-]*$": {
+          "type": "object",
+          "properties": {
+            "$type":  { "const": "duration" },
+            "$value": { "type": "string", "pattern": "^[0-9]+(ms|s)$" }
+          }
+        }
+      }
+    },
+
+    "ease": {
+      "type": "object",
+      "required": ["out", "in", "in-out"],
+      "patternProperties": {
+        "^[a-z][a-z0-9-]*$": {
+          "type": "object",
+          "properties": {
+            "$type": { "const": "cubicBezier" },
+            "$value": {
+              "type": "array",
+              "items": { "type": "number" },
+              "minItems": 4,
+              "maxItems": 4
+            }
+          }
+        }
+      }
+    },
+
+    "shadow": { "$ref": "#/$defs/shadowGroup" }
+  },
+
+  "$defs": {
+    "colorScale": {
+      "type": "object",
+      "patternProperties": {
+        "^(50|100|200|300|400|500|600|700|800|900|950)$": {
+          "type": "object",
+          "required": ["$value"],
+          "properties": {
+            "$type":  { "const": "color" },
+            "$value": { "type": "string" }
+          }
+        }
+      }
+    },
+    "colorGroup": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9-]*$": {
+          "type": "object",
+          "properties": {
+            "$type":  { "const": "color" },
+            "$value": { "type": "string" }
+          }
+        }
+      }
+    },
+    "dimensionGroup": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z0-9][a-z0-9.-]*$": {
+          "type": "object",
+          "properties": {
+            "$type":  { "const": "dimension" },
+            "$value": {
+              "oneOf": [
+                { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?(px|rem|em|%)?$" },
+                {
+                  "type": "object",
+                  "required": ["value", "unit"],
+                  "properties": {
+                    "value": { "type": "number" },
+                    "unit":  { "type": "string", "enum": ["px", "rem", "em", "%"] }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "typographyGroup": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z0-9-]+$": {
+          "type": "object",
+          "properties": {
+            "$type":  { "const": "typography" },
+            "$value": { "type": "object" }
+          }
+        }
+      }
+    },
+    "numberGroup": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z0-9-]+$": {
+          "type": "object",
+          "properties": {
+            "$type":  { "enum": ["number", "lineHeight"] },
+            "$value": { "type": ["number", "string"] }
+          }
+        }
+      }
+    },
+    "shadowGroup": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z0-9-]+$": {
+          "type": "object",
+          "properties": {
+            "$type":  { "const": "shadow" },
+            "$value": { "type": ["string", "object", "array"] }
+          }
+        }
+      }
+    }
+  }
+}

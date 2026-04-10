@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 # load-design-context.sh — SessionStart hook.
-# Loads DESIGN.md summary into the session's initial context so the agent
-# starts with the design system in mind.
+# Injects a summary of the project's DESIGN.md into the session context.
+# Safe JSON building via jq (or python3 fallback).
 
-set -eo pipefail
+set +e
 
-PAYLOAD=$(cat 2>/dev/null || echo '{}')
-CWD=$(printf '%s' "$PAYLOAD" | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get("cwd","."))' 2>/dev/null || echo ".")
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# shellcheck source=_lib.sh
+. "${SCRIPT_DIR}/_lib.sh"
+
+PAYLOAD=$(cat 2>/dev/null || printf '{}')
+CWD=$(read_json_field "$PAYLOAD" '.cwd')
+[ -z "$CWD" ] && CWD="$PWD"
 
 DESIGN_MD=""
 for candidate in "$CWD/DESIGN.md" "$CWD/docs/DESIGN.md" "$CWD/.github/DESIGN.md"; do
@@ -16,21 +21,41 @@ for candidate in "$CWD/DESIGN.md" "$CWD/docs/DESIGN.md" "$CWD/.github/DESIGN.md"
   fi
 done
 
-if [ -z "$DESIGN_MD" ]; then
-  exit 0
-fi
+[ -z "$DESIGN_MD" ] && exit 0
 
-# Extract sections 1–2 (Visual Theme + Color Palette) as a summary — capped at ~2000 chars
-SUMMARY=$(awk '/^## /{n++} n<=3' "$DESIGN_MD" 2>/dev/null | head -c 2000)
+# Take first 3 sections, respecting line boundaries, cap at ~2000 chars
+CTX_FILE=$(mktemp)
+trap 'rm -f "$CTX_FILE"' EXIT
 
-python3 -c "
-import json
-summary = '''$SUMMARY'''
-msg = '📐 awesome-design-md: loaded DESIGN.md from $DESIGN_MD\n\n' + summary + '\n\n[Read the full file before editing UI.]'
+{
+  printf '📐 awesome-design-md loaded DESIGN.md from %s\n\n' "$DESIGN_MD"
+  awk '/^## /{n++} n>3{exit} {print}' "$DESIGN_MD" | awk '
+    BEGIN {len=0; max=1800}
+    {
+      if (len + length($0) + 1 > max) { print "..."; exit }
+      print $0
+      len += length($0) + 1
+    }'
+  printf '\n\n[Read the full file before editing UI. Use tokens, not literals.]\n'
+} > "$CTX_FILE"
+
+if command -v jq >/dev/null 2>&1; then
+  jq -Rs '{
+    hookSpecificOutput: {
+      hookEventName: "SessionStart",
+      additionalContext: .
+    }
+  }' < "$CTX_FILE"
+else
+  if command -v python3 >/dev/null 2>&1; then
+    python3 -c "
+import json, sys
 print(json.dumps({
   'hookSpecificOutput': {
     'hookEventName': 'SessionStart',
-    'additionalContext': msg
+    'additionalContext': sys.stdin.read()
   }
 }))
-"
+" < "$CTX_FILE"
+  fi
+fi

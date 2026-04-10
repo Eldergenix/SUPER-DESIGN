@@ -1,0 +1,216 @@
+$schema: https://github.com/VoltAgent/awesome-design-md/schema/state-matrix/v1
+version: 1
+
+# Machine-readable state matrix. The skill's hooks and quality-score.sh
+# can load this file to verify that components define all required states.
+# To add a component: append an entry following the same shape.
+
+# Global rules applied to every component
+global:
+  focus_ring:
+    selector: ":focus-visible"
+    requirement: "3px outline + 2px offset + 3:1 contrast OR double-ring box-shadow"
+    forbid: [":focus without :focus-visible", "outline: none without replacement"]
+  motion:
+    allowed_properties: [transform, opacity, filter, clip-path]
+    forbidden_properties: [width, height, top, left, right, bottom, margin, padding]
+    max_duration_ms: 500
+    require_reduced_motion_guard: true
+  touch_target:
+    min_width_px: 44
+    min_height_px: 44
+    min_gap_px: 8
+  forced_colors:
+    required_for: [interactive]
+    must_declare: [border, outline-on-focus]
+
+components:
+  Button:
+    interactive: true
+    required_states: [default, hover, focus-visible, active, disabled, loading]
+    state_specs:
+      default:
+        bg: var(--color-accent)
+        fg: var(--color-fg-on-accent)
+      hover:
+        bg: var(--color-accent-hover)
+        transition: background-color var(--duration-fast) var(--ease-out)
+      focus-visible:
+        outline: none
+        box-shadow: "0 0 0 2px var(--color-bg), 0 0 0 5px var(--color-focus-ring)"
+      active:
+        transform: scale(0.98)
+        transition: transform var(--duration-instant) var(--ease-out)
+      disabled:
+        opacity: 0.5
+        cursor: not-allowed
+        pointer-events: none
+      loading:
+        aria-busy: "true"
+        opacity: 0.7
+        cursor: wait
+    aria:
+      role: button
+      attributes: [aria-disabled, aria-busy, aria-pressed (toggle only)]
+    keyboard: [Enter, Space]
+    min_size: { w: 44, h: 44 }
+
+  IconButton:
+    interactive: true
+    required_states: [default, hover, focus-visible, active, disabled]
+    aria:
+      role: button
+      required_attributes: [aria-label]
+    keyboard: [Enter, Space]
+    min_size: { w: 44, h: 44 }
+
+  Input:
+    interactive: true
+    required_states: [default, hover, focus, filled, error, disabled, readonly]
+    state_specs:
+      default:
+        bg: var(--color-surface)
+        border: 1px solid var(--color-border)
+      focus:
+        border: 1px solid var(--color-accent)
+        box-shadow: "0 0 0 3px color-mix(in oklch, var(--color-focus-ring) 30%, transparent)"
+      error:
+        border: 1px solid var(--color-danger)
+        aria-invalid: "true"
+      disabled:
+        opacity: 0.5
+        cursor: not-allowed
+      readonly:
+        bg: var(--color-surface-raised)
+    aria:
+      required_attributes: [aria-invalid (when error), aria-describedby (for error/help)]
+    min_size: { w: 44, h: 44 }
+
+  Textarea:
+    interactive: true
+    required_states: [default, hover, focus, filled, error, disabled, readonly]
+    extends: Input
+    min_size: { w: 44, h: 88 }
+
+  Checkbox:
+    interactive: true
+    required_states: [default, hover, checked, indeterminate, disabled, focus-visible]
+    state_specs:
+      checked:
+        bg: var(--color-accent)
+        check-icon: visible
+      indeterminate:
+        bg: var(--color-accent)
+        dash-icon: visible
+    aria:
+      role: checkbox
+      required_attributes: [aria-checked, aria-labelledby]
+    keyboard: [Space]
+
+  Radio:
+    interactive: true
+    required_states: [default, hover, checked, disabled, focus-visible]
+    aria:
+      role: radio
+      group_role: radiogroup
+      required_attributes: [aria-checked, aria-labelledby]
+    keyboard: [ArrowDown, ArrowUp, ArrowLeft, ArrowRight]
+
+  Switch:
+    interactive: true
+    required_states: [off, on, disabled, focus-visible]
+    state_specs:
+      on:
+        bg: var(--color-accent)
+        thumb: translateX(100%)
+        transition: transform var(--duration-fast) var(--ease-out)
+    aria:
+      role: switch
+      required_attributes: [aria-checked]
+    keyboard: [Space]
+
+  Select:
+    interactive: true
+    required_states: [closed, open, selected, disabled, focus-visible]
+    aria:
+      role: combobox
+      required_attributes: [aria-expanded, aria-controls, aria-haspopup, aria-activedescendant]
+    keyboard: [Enter, Space, ArrowDown, ArrowUp, Home, End, Escape]
+
+  Slider:
+    interactive: true
+    required_states: [default, hover, dragging, disabled, focus-visible]
+    aria:
+      role: slider
+      required_attributes: [aria-valuemin, aria-valuemax, aria-valuenow, aria-valuetext]
+    keyboard: [ArrowLeft, ArrowRight, ArrowUp, ArrowDown, Home, End, PageUp, PageDown]
+
+  Tabs:
+    interactive: true
+    required_states: [default, hover, active, disabled, focus-visible]
+    aria:
+      tablist_role: tablist
+      tab_role: tab
+      panel_role: tabpanel
+      required_attributes: [aria-selected, aria-controls, aria-labelledby]
+    keyboard: [ArrowLeft, ArrowRight, Home, End]
+
+  Link:
+    interactive: true
+    required_states: [default, hover, visited, focus-visible, active]
+    aria:
+      role: link (native)
+    keyboard: [Enter]
+
+  Card:
+    interactive: conditional
+    required_states_if_interactive: [default, hover, selected, focus-within, disabled]
+    state_specs:
+      hover:
+        box-shadow: var(--shadow-md)
+        transform: translateY(-2px)
+        transition: all var(--duration-fast) var(--ease-out)
+      selected:
+        border: 2px solid var(--color-accent)
+        bg: var(--color-accent-subtle)
+
+  Dialog:
+    required_states: [closed, opening, open, closing]
+    aria:
+      role: dialog
+      required_attributes: [aria-modal, aria-labelledby, aria-describedby]
+    keyboard: [Escape, Tab (trapped)]
+    focus_management: trap-and-restore
+
+  Toast:
+    required_states: [enter, visible, exit]
+    aria:
+      role: status | alert
+      live_region: polite | assertive
+    dismiss: auto-5s | manual
+
+  Tooltip:
+    required_states: [hidden, visible]
+    delays:
+      show: 500ms
+      hide: 0ms
+    aria:
+      role: tooltip
+      required_attributes: [aria-describedby on trigger]
+
+# Screen-level states (required for every data view)
+screen_states:
+  required: [loading, empty, error, success, content]
+  loading:
+    pattern: skeleton
+    source: "bg derived from var(--color-surface) to var(--color-surface-raised)"
+    reduced_motion: "disable shimmer"
+  empty:
+    must_include: [illustration, headline, body, primary-cta]
+    must_not_be: "a blank screen with 'No data'"
+  error:
+    must_include: [error-message, retry-affordance]
+    aria: "role=alert"
+  success:
+    transient: true
+    must_auto_dismiss_or_confirm: true

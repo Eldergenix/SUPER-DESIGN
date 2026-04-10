@@ -30,14 +30,12 @@
           {
             "type": "command",
             "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/awesome-design-md/scripts/validate-tokens.sh\"",
-            "timeout": 15,
-            "statusMessage": "design-md: validating tokens..."
+            "timeout": 15
           },
           {
             "type": "command",
             "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/awesome-design-md/scripts/validate-component.sh\"",
-            "timeout": 15,
-            "statusMessage": "design-md: validating component quality..."
+            "timeout": 15
           }
         ]
       }

@@ -1,5 +1,9 @@
 # Example · Linear Dashboard
 
+[![Deploy example to GitHub Pages](https://github.com/Eldergenix/SUPER-DESIGN/actions/workflows/deploy-example.yml/badge.svg)](https://github.com/Eldergenix/SUPER-DESIGN/actions/workflows/deploy-example.yml)
+
+**Live demo:** <https://eldergenix.github.io/SUPER-DESIGN/>
+
 > **A dogfooded Super Design example.** A pixel-faithful recreation of
 > the Linear "Projects" view, built end-to-end from the
 > `super-design-md/linear.app/DESIGN.md` brand extraction using only

@@ -4,3 +4,5 @@ dist-ssr
 *.local
 .vite
 .DS_Store
+# TypeScript incremental build cache — regenerated on every `tsc` invocation
+*.tsbuildinfo

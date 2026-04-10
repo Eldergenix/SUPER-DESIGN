@@ -10,6 +10,9 @@ Reads `DESIGN.md` as a closed token layer · Generates framework-native theme co
 [![Version](https://img.shields.io/badge/version-1.1.0-7170ff?style=flat-square)](./skill/CHANGELOG.md)
 [![Tests](https://img.shields.io/badge/tests-13%2F13%20passing-10b981?style=flat-square)](./skill/skills/super-design/scripts/test.sh)
 [![Skill Format](https://img.shields.io/badge/SKILL.md-1.0-5e6ad2?style=flat-square)](https://code.claude.com/docs/en/skills)
+[![Live demo](https://img.shields.io/badge/live%20demo-eldergenix.github.io%2FSUPER--DESIGN-7170ff?style=flat-square)](https://eldergenix.github.io/SUPER-DESIGN/)
+
+**[▶ Live example: Linear dashboard recreation](https://eldergenix.github.io/SUPER-DESIGN/)** — built end-to-end with the skill from the `super-design-md/linear.app/DESIGN.md` brand extraction. [Source](./example/example-linear-dashboard/).
 
 </div>
 

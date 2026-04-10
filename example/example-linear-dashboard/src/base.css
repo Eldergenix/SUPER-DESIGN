@@ -10,11 +10,16 @@
  * Token references only — no literal hex/rgb values.
  */
 
-@import "./index.css";
-
-/* Inter Variable + ss03/cv01 alternates, loaded from Google's variable font CDN.
-   rsms.me hosts the official Inter Variable WOFF2. */
+/*
+ * Import ordering matters: Vite inlines `@import "./index.css"` at build
+ * time, which brings in that file's full CSS content (theme blocks,
+ * :root, .dark rules, etc.). If the external `inter.css` @import came
+ * AFTER that, it would be preceded by non-import rules in the resolved
+ * bundle, and the CSS spec requires all `@import` rules to come first.
+ * So: external CDN import first, local import second.
+ */
 @import url("https://rsms.me/inter/inter.css");
+@import "./index.css";
 
 /*
  * Extra @theme block for the text-size scale.

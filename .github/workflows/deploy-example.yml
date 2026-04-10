@@ -1,0 +1,95 @@
+#
+# Build and deploy the example Linear dashboard to GitHub Pages.
+#
+# Triggers
+#   - Push to main that touches the example, the skill's theme generator
+#     (since the generator's output is committed to the example), or this
+#     workflow file itself.
+#   - Manual dispatch from the Actions tab.
+#
+# Strategy
+#   - Uses GitHub Pages' native "Build from a GitHub Actions workflow"
+#     source (build_type=workflow) — no gh-pages branch, no artifact
+#     committed to the repo. The compiled dist/ goes straight from the
+#     build job into Pages' deployment environment.
+#   - VITE_BASE_PATH=/SUPER-DESIGN/ is set during build so hashed asset
+#     URLs resolve under the project-page subpath.
+#
+# Security
+#   - No github.event.* interpolations, no github.head_ref, no untrusted
+#     input reaches any run: step. The only ${{ ... }} expression is the
+#     page_url output from the first-party actions/deploy-pages action,
+#     used only in the environment url field (display-only).
+#
+# Requires
+#   - Pages enabled on the repo with build_type=workflow. Set once via:
+#       gh api repos/Eldergenix/SUPER-DESIGN/pages \
+#         -X POST -f build_type=workflow
+#
+name: Deploy example to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'example/example-linear-dashboard/**'
+      - 'skill/skills/super-design/scripts/generate-theme.mjs'
+      - '.github/workflows/deploy-example.yml'
+  workflow_dispatch:
+
+# Single Pages environment. Cancel in-progress older runs when a new
+# commit lands — Pages only cares about the latest successful deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: Build example
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: example/example-linear-dashboard
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: example/example-linear-dashboard/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        env:
+          VITE_BASE_PATH: /SUPER-DESIGN/
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: example/example-linear-dashboard/dist
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

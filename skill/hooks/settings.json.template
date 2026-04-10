@@ -36,6 +36,16 @@
             "type": "command",
             "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/super-design/scripts/validate-component.sh\"",
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/super-design/scripts/validate-reusability.sh\"",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/super-design/scripts/update-ui-memory.sh\"",
+            "timeout": 10
           }
         ]
       }

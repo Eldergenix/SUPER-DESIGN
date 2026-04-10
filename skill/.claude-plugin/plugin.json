@@ -1,6 +1,6 @@
 {
   "name": "super-design",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Production-grade design system skill. Reads DESIGN.md, sets up theme tokens for Tailwind v3/v4, ShadCN, MUI, Radix, or Geist, and enforces consistent UI/UX via quality gates on every edit.",
   "author": {
     "name": "Eldergenix",

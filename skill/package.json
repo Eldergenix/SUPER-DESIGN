@@ -1,7 +1,7 @@
 {
   "name": "super-design",
-  "version": "1.1.0",
-  "description": "Production-grade design system skill for Claude Code, Cursor, Codex, Gemini, Copilot, and more. Reads DESIGN.md, sets up theme tokens, and enforces UI/UX quality gates via hooks.",
+  "version": "1.2.0",
+  "description": "Production-grade design system skill for Claude Code, Cursor, Codex, Gemini, Copilot, and more. Reads DESIGN.md, sets up theme tokens, enforces UI/UX quality gates, responsive guardrails, reusability rules, 44x44 touch targets, and 300-LOC component limits via PostToolUse hooks. Auto-generates a design system showcase page and maintains a running UI memory log.",
   "bin": {
     "super-design": "./bin/install.js"
   },

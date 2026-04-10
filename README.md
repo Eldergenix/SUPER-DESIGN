@@ -18,6 +18,16 @@ Reads `DESIGN.md` as a closed token layer · Generates framework-native theme co
 
 ---
 
+<div align="center">
+
+[![Super Design · Linear dashboard demo](./assets/demo.gif)](https://eldergenix.github.io/SUPER-DESIGN/)
+
+*Recorded from the live deployment at [eldergenix.github.io/SUPER-DESIGN](https://eldergenix.github.io/SUPER-DESIGN/) · 8 hover states, 1200×750, 60 KB*
+
+</div>
+
+---
+
 ## What is Super Design?
 
 Super Design is an installable **AI skill** that teaches any modern AI coding agent (Claude Code, Cursor, Codex, Copilot, Gemini, Windsurf, Cline, Continue, Antigravity, Aider, Zed) how to build and maintain production-grade UI. It is the **closed token layer + quality gate layer** that sits between your brand and the code an AI writes.

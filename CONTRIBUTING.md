@@ -5,7 +5,7 @@ Thanks for contributing.
 This repository ships two things:
 
 1. **Super Design** — the installable AI skill under [`skill/`](./skill/) that enforces production-grade UI/UX on AI-generated code.
-2. **The DESIGN.md collection** — 55 reference `DESIGN.md` files under [`design-md/`](./design-md/) extracted from real developer-focused websites.
+2. **The DESIGN.md collection** — 55 reference `DESIGN.md` files under [`super-design-md/`](./super-design-md/) extracted from real developer-focused websites.
 
 Different contributions go to different paths.
 
@@ -35,11 +35,11 @@ To request a DESIGN.md for a website, [open an issue](https://github.com/Elderge
 4. Update `preview.html` and `preview-dark.html` if your changes affect visible tokens.
 5. Run the schema linter against your updated file:
    ```bash
-   bash skill/skills/super-design/scripts/lint-design-md.sh design-md/<site>/DESIGN.md
+   bash skill/skills/super-design/scripts/lint-design-md.sh super-design-md/<site>/DESIGN.md
    ```
 6. Verify contrast (optional but recommended):
    ```bash
-   node skill/skills/super-design/scripts/contrast-check.mjs design-md/<site>/DESIGN.md
+   node skill/skills/super-design/scripts/contrast-check.mjs super-design-md/<site>/DESIGN.md
    ```
 7. Open a PR with a clear before/after rationale.
 

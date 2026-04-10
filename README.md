@@ -101,7 +101,7 @@ SUPER-DESIGN/
 │       │   └── screenshot-to-code-workflow.md
 │       ├── scripts/                 #     All 14 automation scripts
 │       └── templates/               #     AGENTS.md, CLAUDE.md, shims, ESLint/Stylelint/Prettier configs
-└── design-md/                       # ← Curated DESIGN.md collection (55 real brands)
+└── super-design-md/                 # ← Curated DESIGN.md collection (55 real brands)
     ├── linear.app/                  #   Each folder: DESIGN.md + README + preview.html + preview-dark.html
     ├── stripe/
     ├── vercel/
@@ -114,22 +114,22 @@ SUPER-DESIGN/
 Alongside the skill, this repo ships **55 production-extracted `DESIGN.md` files** from real developer-facing websites. Use any of them as a reference implementation of the format, or copy one directly into your project as a starting point:
 
 ### AI & Machine Learning
-[Claude](./design-md/claude/) · [Cohere](./design-md/cohere/) · [ElevenLabs](./design-md/elevenlabs/) · [Minimax](./design-md/minimax/) · [Mistral AI](./design-md/mistral.ai/) · [Ollama](./design-md/ollama/) · [OpenCode AI](./design-md/opencode.ai/) · [Replicate](./design-md/replicate/) · [RunwayML](./design-md/runwayml/) · [Together AI](./design-md/together.ai/) · [VoltAgent](./design-md/voltagent/) · [xAI](./design-md/x.ai/)
+[Claude](./super-design-md/claude/) · [Cohere](./super-design-md/cohere/) · [ElevenLabs](./super-design-md/elevenlabs/) · [Minimax](./super-design-md/minimax/) · [Mistral AI](./super-design-md/mistral.ai/) · [Ollama](./super-design-md/ollama/) · [OpenCode AI](./super-design-md/opencode.ai/) · [Replicate](./super-design-md/replicate/) · [RunwayML](./super-design-md/runwayml/) · [Together AI](./super-design-md/together.ai/) · [VoltAgent](./super-design-md/voltagent/) · [xAI](./super-design-md/x.ai/)
 
 ### Developer Tools & Platforms
-[Cursor](./design-md/cursor/) · [Expo](./design-md/expo/) · [Linear](./design-md/linear.app/) · [Lovable](./design-md/lovable/) · [Mintlify](./design-md/mintlify/) · [PostHog](./design-md/posthog/) · [Raycast](./design-md/raycast/) · [Resend](./design-md/resend/) · [Sentry](./design-md/sentry/) · [Supabase](./design-md/supabase/) · [Superhuman](./design-md/superhuman/) · [Vercel](./design-md/vercel/) · [Warp](./design-md/warp/) · [Zapier](./design-md/zapier/)
+[Cursor](./super-design-md/cursor/) · [Expo](./super-design-md/expo/) · [Linear](./super-design-md/linear.app/) · [Lovable](./super-design-md/lovable/) · [Mintlify](./super-design-md/mintlify/) · [PostHog](./super-design-md/posthog/) · [Raycast](./super-design-md/raycast/) · [Resend](./super-design-md/resend/) · [Sentry](./super-design-md/sentry/) · [Supabase](./super-design-md/supabase/) · [Superhuman](./super-design-md/superhuman/) · [Vercel](./super-design-md/vercel/) · [Warp](./super-design-md/warp/) · [Zapier](./super-design-md/zapier/)
 
 ### Infrastructure & Cloud
-[ClickHouse](./design-md/clickhouse/) · [Composio](./design-md/composio/) · [HashiCorp](./design-md/hashicorp/) · [MongoDB](./design-md/mongodb/) · [Sanity](./design-md/sanity/) · [Stripe](./design-md/stripe/)
+[ClickHouse](./super-design-md/clickhouse/) · [Composio](./super-design-md/composio/) · [HashiCorp](./super-design-md/hashicorp/) · [MongoDB](./super-design-md/mongodb/) · [Sanity](./super-design-md/sanity/) · [Stripe](./super-design-md/stripe/)
 
 ### Design & Productivity
-[Airtable](./design-md/airtable/) · [Cal.com](./design-md/cal/) · [Clay](./design-md/clay/) · [Figma](./design-md/figma/) · [Framer](./design-md/framer/) · [Intercom](./design-md/intercom/) · [Miro](./design-md/miro/) · [Notion](./design-md/notion/) · [Pinterest](./design-md/pinterest/) · [Webflow](./design-md/webflow/)
+[Airtable](./super-design-md/airtable/) · [Cal.com](./super-design-md/cal/) · [Clay](./super-design-md/clay/) · [Figma](./super-design-md/figma/) · [Framer](./super-design-md/framer/) · [Intercom](./super-design-md/intercom/) · [Miro](./super-design-md/miro/) · [Notion](./super-design-md/notion/) · [Pinterest](./super-design-md/pinterest/) · [Webflow](./super-design-md/webflow/)
 
 ### Fintech & Crypto
-[Coinbase](./design-md/coinbase/) · [Kraken](./design-md/kraken/) · [Revolut](./design-md/revolut/) · [Wise](./design-md/wise/)
+[Coinbase](./super-design-md/coinbase/) · [Kraken](./super-design-md/kraken/) · [Revolut](./super-design-md/revolut/) · [Wise](./super-design-md/wise/)
 
 ### Enterprise & Consumer
-[Airbnb](./design-md/airbnb/) · [Apple](./design-md/apple/) · [BMW](./design-md/bmw/) · [IBM](./design-md/ibm/) · [NVIDIA](./design-md/nvidia/) · [SpaceX](./design-md/spacex/) · [Spotify](./design-md/spotify/) · [Uber](./design-md/uber/)
+[Airbnb](./super-design-md/airbnb/) · [Apple](./super-design-md/apple/) · [BMW](./super-design-md/bmw/) · [IBM](./super-design-md/ibm/) · [NVIDIA](./super-design-md/nvidia/) · [SpaceX](./super-design-md/spacex/) · [Spotify](./super-design-md/spotify/) · [Uber](./super-design-md/uber/)
 
 ## Why "Super Design"?
 
@@ -168,7 +168,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the DESIGN.md collection, and [`ski
 
 ## License
 
-MIT — see [LICENSE](./LICENSE). All `DESIGN.md` files in `design-md/` represent publicly visible CSS values extracted from live websites; we do not claim ownership of any site's visual identity.
+MIT — see [LICENSE](./LICENSE). All `DESIGN.md` files in `super-design-md/` represent publicly visible CSS values extracted from live websites; we do not claim ownership of any site's visual identity.
 
 ## Links
 

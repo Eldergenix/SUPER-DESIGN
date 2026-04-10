@@ -1,6 +1,6 @@
 # Superhuman Inspired Design System
 
-[DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/superhuman/DESIGN.md) extracted from the public [superhuman](https://superhuman.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
+[DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/superhuman/DESIGN.md) extracted from the public [superhuman](https://superhuman.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
 
 ## Files
 
@@ -10,7 +10,7 @@
 | `preview.html` | Interactive design token catalog (light) |
 | `preview-dark.html` | Interactive design token catalog (dark) |
 
-Use [DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/superhuman/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Superhuman design language.
+Use [DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/superhuman/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Superhuman design language.
 
 ## Preview
 

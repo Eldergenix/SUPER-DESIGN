@@ -1,6 +1,6 @@
 # Uber Inspired Design System
 
-[DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/uber/DESIGN.md) extracted from the public [uber](https://uber.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
+[DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/uber/DESIGN.md) extracted from the public [uber](https://uber.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
 
 ## Files
 
@@ -11,7 +11,7 @@
 | `preview-dark.html` | Interactive design token catalog (dark) |
 
 
-Use [DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/uber/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Uber design language.
+Use [DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/uber/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Uber design language.
 
 ## Preview
 

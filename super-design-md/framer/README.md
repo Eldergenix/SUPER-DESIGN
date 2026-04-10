@@ -1,6 +1,6 @@
 # Framer Inspired Design System
 
-[DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/framer/DESIGN.md) extracted from the public [framer](https://framer.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
+[DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/framer/DESIGN.md) extracted from the public [framer](https://framer.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
 
 ## Files
 
@@ -10,7 +10,7 @@
 | `preview.html` | Interactive design token catalog (light) |
 | `preview-dark.html` | Interactive design token catalog (dark) |
 
-Use [DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/framer/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Framer design language.
+Use [DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/framer/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Framer design language.
 
 ## Preview
 

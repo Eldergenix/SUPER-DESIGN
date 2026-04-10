@@ -1,6 +1,6 @@
 # Mongodb Inspired Design System
 
-[DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/mongodb/DESIGN.md) extracted from the public [mongodb](https://mongodb.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
+[DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/mongodb/DESIGN.md) extracted from the public [mongodb](https://mongodb.com/) website. This is not the official design system. Colors, fonts, and spacing may not be 100% accurate. But it's a good starting point for building something similar.
 
 ## Files
 
@@ -10,7 +10,7 @@
 | `preview.html` | Interactive design token catalog (light) |
 | `preview-dark.html` | Interactive design token catalog (dark) |
 
-Use [DESIGN.md](https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/mongodb/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Mongodb design language.
+Use [DESIGN.md](https://github.com/Eldergenix/SUPER-DESIGN/blob/main/super-design-md/mongodb/DESIGN.md) to use as a reference for AI agents (Claude, Cursor, Stitch) to generate UI that looks like the Mongodb design language.
 
 ## Preview
 
